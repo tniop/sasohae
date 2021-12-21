@@ -1,0 +1,26 @@
+{
+  "devDependencies": {
+    "prettier": "^2.5.1"
+  },
+  "name": "final",
+  "description": "항해99 4기 실전프로젝트 repo입니다",
+  "version": "1.0.0",
+  "main": ".prettierrc.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "prettify": "prettier --write *.js **/*.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://TnIoP@github.com/TnIoP/hh99.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TnIoP/hh99/issues"
+  },
+  "homepage": "https://github.com/TnIoP/hh99#readme"
+}
