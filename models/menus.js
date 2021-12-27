@@ -21,7 +21,7 @@ const MenusSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    menuResult: {
+    menuName: {
         type: String,
         required: true,
     },
