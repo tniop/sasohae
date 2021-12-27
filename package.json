@@ -1,38 +1,40 @@
 {
-  "devDependencies": {
-    "prettier": "^2.5.1"
-  },
-  "name": "final",
-  "description": "항해99 4기 실전프로젝트 repo입니다",
-  "version": "1.0.0",
-  "main": ".prettierrc.js",
-  "directories": {
-    "test": "test"
-  },
-  "scripts": {
-    "prettify": "prettier --write *.js **/*.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://TnIoP@github.com/TnIoP/hh99.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/TnIoP/hh99/issues"
-  },
-  "homepage": "https://github.com/TnIoP/hh99#readme",
-  "dependencies": {
-    "certbot": "^5.0.3",
-    "cors": "^2.8.5",
-    "dotenv": "^10.0.0",
-    "express": "^4.17.2",
-    "jest": "^27.4.5",
-    "mongoose": "^6.1.3",
-    "multer": "^1.4.4",
-    "multer-s3": "^2.10.0",
-    "swagger": "^0.7.5",
-    "swagger-autogen": "^2.18.0"
-  }
+    "devDependencies": {
+        "prettier": "^2.5.1"
+    },
+    "name": "final",
+    "description": "항해99 4기 실전프로젝트 repo입니다",
+    "version": "1.0.0",
+    "main": ".prettierrc.js",
+    "directories": {
+        "test": "test"
+    },
+    "scripts": {
+        "prettify": "prettier --write *.js **/*.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://TnIoP@github.com/TnIoP/hh99.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/TnIoP/hh99/issues"
+    },
+    "homepage": "https://github.com/TnIoP/hh99#readme",
+    "dependencies": {
+        "certbot": "^5.0.3",
+        "cors": "^2.8.5",
+        "dotenv": "^10.0.0",
+        "express": "^4.17.2",
+        "jest": "^27.4.5",
+        "mongoose": "^6.1.3",
+        "mongoose-auto-increment": "^5.0.1",
+        "multer": "^1.4.4",
+        "multer-s3": "^2.10.0",
+        "swagger": "^0.7.5",
+        "swagger-autogen": "^2.18.0",
+        "swagger-ui-express": "^4.3.0"
+    }
 }
