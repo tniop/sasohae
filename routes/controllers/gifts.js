@@ -9,8 +9,8 @@ async function createGift(req, res) {
             giftEvent,
             sex,
             age,
-            giftAnswerPerson,
-            giftAnswerEmotion,
+            giftAnswerPersonality,
+            giftAnswerEmotional,
             giftAnswerTrendy,
             giftAnswerExpensive,
             giftLikeCnt,
@@ -23,8 +23,8 @@ async function createGift(req, res) {
             giftEvent,
             sex,
             age,
-            giftAnswerPerson,
-            giftAnswerEmotion,
+            giftAnswerPersonality,
+            giftAnswerEmotional,
             giftAnswerTrendy,
             giftAnswerExpensive,
             giftLikeCnt,
@@ -33,6 +33,7 @@ async function createGift(req, res) {
         res.status(201).send();
     } catch (err) {
         console.log(err);
+        res.status(400).send(err);
     }
 }
 

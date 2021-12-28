@@ -27,10 +27,10 @@ const gifts = new mongoose.Schema({
     age: {
         type: Number,
     },
-    giftAnswerPerson: {
+    giftAnswerPersonality: {
         type: Boolean,
     },
-    giftAnswerEmotion: {
+    giftAnswerEmotional: {
         type: Boolean,
     },
     giftAnswerTrendy: {
