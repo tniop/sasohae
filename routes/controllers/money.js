@@ -1,4 +1,5 @@
 const moneyQuestions = require("../../models/moneyQuestions");
+const statistic = require("../../models/statistic");
 
 async function getMoneyQuestion(req, res) {
     try {
