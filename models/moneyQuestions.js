@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const MoneyQuestionsSchema = new mongoose.Schema({
-    moneyQuestion_id: {
+    moneyQuestionNum: {
         type: Number,
         required: true,
         unique: true,

@@ -11,9 +11,9 @@ const imgUpload = require("./controllers/imgUpload");
 router.post("/comments", createBoard);
 router.get("/comments/:commentIdx", getBoards);
 router.post("/admin/gifts", createGift);
-router.post("/admin/menu", createMenu);
-router.post("/admin/gifts/questions", createGiftQuestions);
-router.post("/admin/money", createMoneyQuestions);
 router.post("/admin/image", upload.single("img"), imgUpload);
+router.post("/admin/menu", createMenu);
+router.post("/admin/money", createMoneyQuestions);
+router.post("/admin/gifts/questions", createGiftQuestions);
 
 module.exports = router;

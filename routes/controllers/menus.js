@@ -6,7 +6,7 @@ async function createMenu(req, res) {
             menuType,
             menuStyle,
             menuWith,
-            menuResult,
+            menuName,
             menuLikeCnt,
             menuResultCnt,
         } = req.body;
@@ -14,7 +14,7 @@ async function createMenu(req, res) {
             menuType,
             menuStyle,
             menuWith,
-            menuResult,
+            menuName,
             menuLikeCnt,
             menuResultCnt,
         });
