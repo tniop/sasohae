@@ -2,9 +2,9 @@ const gifts = require("../../models/gifts");
 
 async function createGift(req, res) {
     try {
+        const giftUrl = req.file.location;
         const {
             giftName,
-            giftUrl,
             giftTarget,
             giftEvent,
             sex,
