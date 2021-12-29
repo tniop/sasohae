@@ -28,16 +28,16 @@ const gifts = new mongoose.Schema({
         type: Number,
     },
     giftAnswerPersonality: {
-        type: Boolean,
+        type: String,
     },
     giftAnswerEmotional: {
-        type: Boolean,
+        type: String,
     },
     giftAnswerTrendy: {
-        type: Boolean,
+        type: String,
     },
     giftAnswerExpensive: {
-        type: Boolean,
+        type: String,
     },
     giftLikeCnt: {
         type: Number,

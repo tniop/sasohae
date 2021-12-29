@@ -4,12 +4,14 @@ const multer = require("multer");
 const AWS = require("aws-sdk");
 require("dotenv").config();
 
+// AWS S3 사용하기 위한 config
 AWS.config.update({
     accessKeyId: process.env.AWSAccessKeyId,
     secretAccessKey: process.env.AWSSecretKey,
     region: "ap-northeast-2",
 });
 
+// multer를 사용하여 이미지를 업로드하는 미들웨어
 const upload = multer({
     storage: multerS3({
         s3: new AWS.S3(),

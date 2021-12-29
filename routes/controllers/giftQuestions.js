@@ -1,5 +1,6 @@
 const giftQuestions = require("../../models/giftQuestions");
 
+//admin : 선물 질문 db 등재용 함수
 async function createGiftQuestions(req, res) {
     try {
         const {

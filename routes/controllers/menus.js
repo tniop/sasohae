@@ -1,7 +1,9 @@
 const menus = require("../../models/menus");
 
+// admin : 메뉴 db 등재용 함수
 async function createMenu(req, res) {
     try {
+        const menuUrl = req.file.location;
         const {
             menuType,
             menuStyle,
@@ -11,6 +13,7 @@ async function createMenu(req, res) {
             menuResultCnt,
         } = req.body;
         await menus.create({
+            menuUrl,
             menuType,
             menuStyle,
             menuWith,

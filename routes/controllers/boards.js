@@ -1,5 +1,6 @@
 const boards = require("../../models/boards");
 
+// 고민 끄나풀 작성을 위한 함수
 async function createBoard(req, res) {
     try {
         const { comment } = req.body;
@@ -15,15 +16,39 @@ async function createBoard(req, res) {
     }
 }
 
-async function getBoards(req, res) {
+// 무한 스크롤 사용을 위한 함수 > 요청에 대하여 10개씩 잘라 보낸다.
+async function getSelectedBoards(req, res) {
     try {
-        // const board_id = req.params;
-        const allBoards = await boards.find({});
-        res.status(200).send(allBoards);
+        const board_id = req.params;
+        const startNumber = Number(board_id.commentIdx);
+        if (!req.params || startNumber == 0) {
+            const selectedBoards = await boards
+                .find({})
+                .limit(10)
+                .skip(startNumber);
+            res.status(200).send(selectedBoards);
+            return;
+        }
+        const selectedBoards = await boards
+            .find({})
+            .limit(10)
+            .skip(startNumber);
+        res.status(200).send(selectedBoards);
     } catch (err) {
         console.log(err);
         res.status(400).send(err);
     }
 }
 
-module.exports = { createBoard, getBoards };
+// 게시글 전체 조회를 위한 함수
+// async function getAllBoards(req, res) {
+//     try {
+//         const allBoards = await boards.find({});
+//         res.status(200).send(allBoards);
+//     } catch (err) {
+//         console.log(err);
+//         res.status(400).send(err);
+//     }
+// }
+
+module.exports = { createBoard, getSelectedBoards };

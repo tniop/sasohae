@@ -1,5 +1,6 @@
 const MoneyQuestions = require("../../models/moneyQuestions");
 
+// admin : 축의금 질문을 위한 db 등재용 함수
 async function createMoneyQuestions(req, res) {
     try {
         const {

@@ -1,5 +1,6 @@
 const gifts = require("../../models/gifts");
 
+// admin : 개별 선물 db 등재용 함수
 async function createGift(req, res) {
     try {
         const giftUrl = req.file.location;
