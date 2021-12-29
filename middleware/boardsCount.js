@@ -1,4 +1,4 @@
-const statistics = require("../models/statistic");
+const statistics = require("../models/statistics");
 
 // statistic의 고민 끄나풀 단순 이용자 집계를 위한 함수
 async function updateBoardUsersCnt(req, res, next) {

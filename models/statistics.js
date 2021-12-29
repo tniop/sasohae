@@ -5,35 +5,36 @@ const statistics = new mongoose.Schema({
         type: Number,
         required: true,
         unique: true,
+        default: 1,
     },
     totVisitorCnt: {
         type: Number,
-        required: true,
+        default: 0,
     },
     giftSurveyUsersCnt: {
         type: Number,
-        required: true,
+        default: 0,
     },
     giftRandomUsersCnt: {
         type: Number,
-        required: true,
+        default: 0,
     },
     moneyUsersCnt: {
         type: Number,
-        required: true,
+        default: 0,
     },
     menuUsersCnt: {
         type: Number,
-        required: true,
+        default: 0,
     },
     boardUsersCnt: {
         type: Number,
-        required: true,
+        default: 0,
     },
     boardWriteUsersCnt: {
         type: Number,
-        required: true,
+        default: 0,
     },
 });
 
-module.exports = mongoose.model("statistic", statistics);
+module.exports = mongoose.model("statistics", statistics);

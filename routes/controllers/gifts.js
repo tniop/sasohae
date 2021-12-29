@@ -1,7 +1,7 @@
 const gifts = require("../../models/gifts");
 const giftQuestions = require("../../models/giftQuestions");
 const giftUserData = require("../../models/giftUserData");
-const statistic = require("../../models/statistic");
+const statistic = require("../../models/statistics");
 
 // admin : 개별 선물 db 등재용 함수
 async function createGift(req, res) {
