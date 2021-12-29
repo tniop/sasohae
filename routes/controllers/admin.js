@@ -1,0 +1,115 @@
+const MoneyQuestions = require("../../models/moneyQuestions");
+const menus = require("../../models/menus");
+const gifts = require("../../models/gifts");
+const giftQuestions = require("../../models/giftQuestions");
+
+// admin : 축의금 질문을 위한 db 등재용 함수
+async function createMoneyQuestions(req, res) {
+    try {
+        const {
+            moneyQuestion_id,
+            moneyQuestion,
+            positiveAnswerQuestion,
+            negativeAnswerQuestion,
+            positiveChangeValue,
+        } = req.body;
+        await MoneyQuestions.create({
+            moneyQuestion_id,
+            moneyQuestion,
+            positiveAnswerQuestion,
+            negativeAnswerQuestion,
+            positiveChangeValue,
+        });
+        res.status(201).send();
+    } catch (err) {
+        console.log(err);
+        res.status(400).send(err);
+    }
+}
+
+// admin : 메뉴 db 등재용 함수
+async function createMenu(req, res) {
+    try {
+        const menuUrl = req.file.location;
+        const {
+            menuType,
+            menuStyle,
+            menuWith,
+            menuName,
+            menuLikeCnt,
+            menuResultCnt,
+        } = req.body;
+        await menus.create({
+            menuUrl,
+            menuType,
+            menuStyle,
+            menuWith,
+            menuName,
+            menuLikeCnt,
+            menuResultCnt,
+        });
+        res.status(201).send();
+    } catch (err) {
+        console.log(err);
+        res.status(400).send(err);
+    }
+}
+
+// admin : 개별 선물 db 등재용 함수
+async function createGift(req, res) {
+    try {
+        const giftUrl = req.file.location;
+        const {
+            giftName,
+            giftTarget,
+            giftEvent,
+            sex,
+            age,
+            giftAnswerExpensive,
+            giftAnswerPersonality,
+            giftAnswerEmotional,
+            giftAnswerTrendy,
+            giftLikeCnt,
+            giftResultCnt,
+        } = req.body;
+        await gifts.create({
+            giftName,
+            giftUrl,
+            giftTarget,
+            giftEvent,
+            sex,
+            age,
+            giftAnswerExpensive,
+            giftAnswerPersonality,
+            giftAnswerEmotional,
+            giftAnswerTrendy,
+            giftLikeCnt,
+            giftResultCnt,
+        });
+        res.status(201).send();
+    } catch (err) {
+        console.log(err);
+        res.status(400).send(err);
+    }
+}
+
+// admin : 선물 질문을 위한 db 등재용 함수
+async function createGiftQuestions(req, res) {
+    try {
+        const { giftQuestion, giftQuestionType } = req.body;
+        await giftQuestions.create({
+            giftQuestion,
+            giftQuestionType,
+        });
+        res.status(201).send();
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+module.exports = {
+    createMoneyQuestions,
+    createMenu,
+    createGift,
+    createGiftQuestions,
+};
