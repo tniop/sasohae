@@ -5,6 +5,7 @@ async function updateBoardUsersCnt(req, res, next) {
     try {
         const params = req.params.commentIdx;
         if (params == "0") {
+
             const countData = await statistics.findOne({ statistic_id: 1 });
             if (!countData) {
                 await statistics.create({});
