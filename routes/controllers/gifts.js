@@ -132,9 +132,10 @@ async function reviseGiftFeedback(req, res) {
         console.log(giftName);
         const likeGiftExist = await gifts.findOne({ giftName: giftName });
         console.log("likeGiftExist: " + likeGiftExist);
+        const {giftLikeCnt} = await gifts.findOne({ giftName: giftName });
 
         await gifts.updateOne(
-            { giftName },
+            { giftName:giftName },
             { $set: { giftLikeCnt: giftLikeCnt + 1 } }
         );
 
