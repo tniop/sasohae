@@ -1,5 +1,6 @@
 const statistic = require("../../models/statistics");
 
+// 방문자수
 async function userVisit(req, res) {
     try {
         const statistic_id = 1;
@@ -29,6 +30,7 @@ async function userVisit(req, res) {
     }
 }
 
+// 축의금 추천 기능 사용자 수
 async function useMoney(req, res) {
     try {
         const statistic_id = 1;
@@ -43,6 +45,7 @@ async function useMoney(req, res) {
     }
 }
 
+// 음식 메뉴 추천 기능 사용자 수
 async function useMenu(req, res) {
     try {
         const statistic_id = 1;
