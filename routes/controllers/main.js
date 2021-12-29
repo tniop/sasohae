@@ -1,4 +1,4 @@
-const statistic = require("../../models/statistic");
+const statistic = require("../../models/statistics");
 
 async function userVisit(req, res) {
     try {

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const MoneyQuestionsSchema = new mongoose.Schema({
+const moneyQuestions = new mongoose.Schema({
     moneyQuestion_id: {
         type: Number,
         required: true,
@@ -24,4 +24,4 @@ const MoneyQuestionsSchema = new mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model("MoneyQuestions", MoneyQuestionsSchema);
+module.exports = mongoose.model("moneyQuestions", moneyQuestions);

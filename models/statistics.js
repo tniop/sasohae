@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const StatisticSchema = new mongoose.Schema({
+const statistics = new mongoose.Schema({
     statistic_id: {
         type: Number,
         required: true,
@@ -36,4 +36,4 @@ const StatisticSchema = new mongoose.Schema({
     },
 });
 
-module.exports = mongoose.model("Statistic", StatisticSchema);
+module.exports = mongoose.model("statistic", statistics);
