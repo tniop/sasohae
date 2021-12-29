@@ -2,12 +2,16 @@ const mongoose = require("mongoose");
 const autoIncrement = require("mongoose-auto-increment");
 autoIncrement.initialize(mongoose.connection);
 
-const menusSchema = new mongoose.Schema({
+const menus = new mongoose.Schema({
     menu_id: {
         type: Number,
         required: true,
         unique: true,
         default: 0,
+    },
+    menuUrl: {
+        type: String,
+        required: true,
     },
     menuType: {
         type: String,
@@ -35,11 +39,11 @@ const menusSchema = new mongoose.Schema({
     },
 });
 
-menusSchema.plugin(autoIncrement.plugin, {
-    model: "menusSchema",
+menus.plugin(autoIncrement.plugin, {
+    model: "menus",
     field: "menu_id",
     startAt: 1,
     increment: 1,
 });
 
-module.exports = mongoose.model("menus", menusSchema);
+module.exports = mongoose.model("menus", menus);

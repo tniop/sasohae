@@ -1,13 +1,11 @@
 const mongoose = require("mongoose");
-const autoIncrement = require("mongoose-auto-increment");
-autoIncrement.initialize(mongoose.connection);
 
-const statistic = new mongoose.Schema({
+const statistics = new mongoose.Schema({
     statistic_id: {
         type: Number,
         required: true,
         unique: true,
-        default: 0,
+        default: 1,
     },
     totVisitorCnt: {
         type: Number,
@@ -39,11 +37,4 @@ const statistic = new mongoose.Schema({
     },
 });
 
-statistic.plugin(autoIncrement.plugin, {
-    model: "statistic",
-    field: "statistic_id",
-    startAt: 1,
-    increment: 1,
-});
-
-module.exports = mongoose.model("statistic", statistic);
+module.exports = mongoose.model("statistics", statistics);

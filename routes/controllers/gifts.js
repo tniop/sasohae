@@ -3,6 +3,44 @@ const giftQuestions = require("../../models/giftQuestions");
 const giftUserData = require("../../models/giftUserData");
 const statistic = require("../../models/statistic");
 
+// admin : 개별 선물 db 등재용 함수
+async function createGift(req, res) {
+    try {
+        const giftUrl = req.file.location;
+        const {
+            giftName,
+            giftTarget,
+            giftEvent,
+            sex,
+            age,
+            giftAnswerExpensive,
+            giftAnswerPersonality,
+            giftAnswerEmotional,
+            giftAnswerTrendy,
+            giftLikeCnt,
+            giftResultCnt,
+        } = req.body;
+        await gifts.create({
+            giftName,
+            giftUrl,
+            giftTarget,
+            giftEvent,
+            sex,
+            age,
+            giftAnswerExpensive,
+            giftAnswerPersonality,
+            giftAnswerEmotional,
+            giftAnswerTrendy,
+            giftLikeCnt,
+            giftResultCnt,
+        });
+        res.status(201).send();
+    } catch (err) {
+        console.log(err);
+        res.status(400).send(err);
+    }
+}
+
 // 선물추천 옵션 받기(설문) => DONE
 async function getGiftQuestion(req, res) { 
     try { 
@@ -191,43 +229,7 @@ async function createGiftQuestions(req, res) {
         console.log(err);
     }
 }
-
-
-// admin: gift 초기 DB 셋팅 ============================================
-async function createGift(req, res) {
-    try {
-        const {
-            giftName,
-            giftUrl,
-            giftTarget,
-            giftEvent,
-            sex,
-            age,
-            giftAnswerExpensive,
-            giftAnswerPersonality,
-            giftAnswerEmotional,
-            giftAnswerTrendy,
-            giftLikeCnt,
-            giftResultCnt,
-        } = req.body;
-        await gifts.create({
-            giftName,
-            giftUrl,
-            giftTarget,
-            giftEvent,
-            sex,
-            age,
-            giftAnswerExpensive,
-            giftAnswerPersonality,
-            giftAnswerEmotional,
-            giftAnswerTrendy,
-            giftLikeCnt,
-            giftResultCnt,
-        });
-        res.status(201).send();
-    } catch (err) {
-        console.log(err);
-    }
-}
+    
 
 module.exports = { getGiftQuestion, addGiftResult, getGiftResult, reviseGiftFeedback, getRandomGift, createGift, createGiftQuestions, createStatistic };
+
