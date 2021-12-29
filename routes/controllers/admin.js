@@ -1,9 +1,61 @@
-const MoneyQuestions = require("../../models/moneyQuestions");
-const menus = require("../../models/menus");
 const gifts = require("../../models/gifts");
 const giftQuestions = require("../../models/giftQuestions");
+const MoneyQuestions = require("../../models/moneyQuestions");
+const menus = require("../../models/menus");
 
-// admin : 축의금 질문을 위한 db 등재용 함수
+// 개별 선물 db 등재용 함수
+async function createGift(req, res) {
+    try {
+        const giftUrl = req.file.location;
+        const {
+            giftName,
+            giftTarget,
+            giftEvent,
+            sex,
+            age,
+            giftAnswerExpensive,
+            giftAnswerPersonality,
+            giftAnswerEmotional,
+            giftAnswerTrendy,
+            giftLikeCnt,
+            giftResultCnt,
+        } = req.body;
+        await gifts.create({
+            giftName,
+            giftUrl,
+            giftTarget,
+            giftEvent,
+            sex,
+            age,
+            giftAnswerExpensive,
+            giftAnswerPersonality,
+            giftAnswerEmotional,
+            giftAnswerTrendy,
+            giftLikeCnt,
+            giftResultCnt,
+        });
+        res.status(201).send();
+    } catch (err) {
+        console.log(err);
+        res.status(400).send(err);
+    }
+}
+
+// 선물 질문을 위한 db 등재용 함수
+async function createGiftQuestions(req, res) {
+    try {
+        const { giftQuestion, giftQuestionType } = req.body;
+        await giftQuestions.create({
+            giftQuestion,
+            giftQuestionType,
+        });
+        res.status(201).send();
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+// 축의금 질문을 위한 db 등재용 함수
 async function createMoneyQuestions(req, res) {
     try {
         const {
@@ -55,61 +107,9 @@ async function createMenu(req, res) {
     }
 }
 
-// admin : 개별 선물 db 등재용 함수
-async function createGift(req, res) {
-    try {
-        const giftUrl = req.file.location;
-        const {
-            giftName,
-            giftTarget,
-            giftEvent,
-            sex,
-            age,
-            giftAnswerExpensive,
-            giftAnswerPersonality,
-            giftAnswerEmotional,
-            giftAnswerTrendy,
-            giftLikeCnt,
-            giftResultCnt,
-        } = req.body;
-        await gifts.create({
-            giftName,
-            giftUrl,
-            giftTarget,
-            giftEvent,
-            sex,
-            age,
-            giftAnswerExpensive,
-            giftAnswerPersonality,
-            giftAnswerEmotional,
-            giftAnswerTrendy,
-            giftLikeCnt,
-            giftResultCnt,
-        });
-        res.status(201).send();
-    } catch (err) {
-        console.log(err);
-        res.status(400).send(err);
-    }
-}
-
-// admin : 선물 질문을 위한 db 등재용 함수
-async function createGiftQuestions(req, res) {
-    try {
-        const { giftQuestion, giftQuestionType } = req.body;
-        await giftQuestions.create({
-            giftQuestion,
-            giftQuestionType,
-        });
-        res.status(201).send();
-    } catch (err) {
-        console.log(err);
-    }
-}
-
 module.exports = {
-    createMoneyQuestions,
-    createMenu,
     createGift,
     createGiftQuestions,
+    createMoneyQuestions,
+    createMenu,
 };

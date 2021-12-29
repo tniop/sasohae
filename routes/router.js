@@ -1,53 +1,65 @@
 const express = require("express");
 const router = express.Router();
-const { createBoard, getSelectedBoards } = require("./controllers/boards");
-const { getGiftQuestion, addGiftResult, getGiftResult, reviseGiftFeedback, getRandomGift, createGift, createGiftQuestions, createStatistic } = require("./controllers/gifts");
-const { userVisit, useMoney, useMenu } = require("./controllers/statistics");
+
+/* ==================== controllers ====================*/
+const { 
+    getGiftQuestion,
+    addGiftResult,
+    getGiftResult,
+    reviseGiftFeedback,
+    getRandomGift, 
+} = require("./controllers/gifts");
 const { getMoneyQuestion, moneyQuestionAnswer } = require("./controllers/money");
-const { getMenu, likeMenu, createMenu } = require("./controllers/menus");
-
-const createMoneyQuestions = require("./controllers/moneyQuestions");
-
-const upload = require("../middleware/upload");
+const { getMenu, likeMenu } = require("./controllers/menus");
+const { createBoard, getSelectedBoards } = require("./controllers/boards");
+const {     
+    createMoneyQuestions,
+    createMenu,
+    createGift,
+    createGiftQuestions, 
+} = require("./controllers/admin");
 const imgUpload = require("./controllers/imgUpload");
+/* ==================================================*/
+
+/* ==================== middleware ====================*/
+const upload = require("../middleware/upload");
 const {
-    updateBoardUsersCnt,
-    updateBoardWriteUsersCnt,
-} = require("../middleware/boardsCount");
-const {
-    updateSurveyUsersCnt,
-    updateRandomUsersCnt,
-} = require("../middleware/giftsCount");
+    userVisit,
+    useGift,
+    useRandomGift,
+    useMoney,
+    useMenu,
+    userVisitBoard,
+    writeBoard,
+} = require("../middleware/statistic");
+/* ==================================================*/
 
+/* ==================== router ====================*/
+router.put("/main", userVisit);
+router.put("/comments", userVisitBoard);
+router.put("/money", useMoney);
 
-router.post("/comments", updateBoardWriteUsersCnt, createBoard);
-router.get("/comments/:commentIdx", updateBoardUsersCnt, getSelectedBoards);
-router.post("/admin/gifts", upload.single("img"), createGift);
-// router.post("/admin/image", upload.single("img"), imgUpload); 이미지 업로드를 위한 admin용 api
-router.post("/admin/menu", upload.single("img"), createMenu);
-router.post("/admin/money", createMoneyQuestions);
-router.post("/admin/gifts/questions", createGiftQuestions);
-
-router.get("/gifts", updateSurveyUsersCnt, getGiftQuestion);
+router.get("/gifts", useGift, getGiftQuestion);
 router.post("/gifts", addGiftResult);
 router.get("/gifts/result", getGiftResult); // addGiftResult 로 함께 처리
 router.put("/gifts/result", reviseGiftFeedback);
-router.get("/gifts/random", updateRandomUsersCnt, getRandomGift);
-
-router.put("/main", userVisit);
-router.put("/main/money", useMoney);
-router.put("/main/menu", useMenu);
+router.get("/gifts/random", useRandomGift, getRandomGift);
 
 router.get("/money", getMoneyQuestion);
 router.get("/money/:menuQuestion", moneyQuestionAnswer);
 
 router.get("/menu", getMenu);
-router.put("/menu", likeMenu);
+router.put("/menu", useMenu, likeMenu);
 
-/* admin 초기 DB 셋팅 
-router.post("/admin/gifts", createGift);
+router.post("/comments", writeBoard, createBoard);
+router.get("/comments/:commentIdx", getSelectedBoards);
+
+// router.post("/admin/image", upload.single("img"), imgUpload);
+
+router.post("/admin/gifts", upload.single("img"), createGift);
 router.post("/admin/gifts/questions", createGiftQuestions);
-router.post("/admin/gifts/statistics", createStatistic);
-*/
+router.post("/admin/money", createMoneyQuestions);
+router.post("/admin/menu", upload.single("img"), createMenu);
+/* ==================================================*/
 
 module.exports = router;

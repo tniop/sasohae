@@ -40,15 +40,4 @@ async function getSelectedBoards(req, res) {
     }
 }
 
-// 게시글 전체 조회를 위한 함수
-// async function getAllBoards(req, res) {
-//     try {
-//         const allBoards = await boards.find({});
-//         res.status(200).send(allBoards);
-//     } catch (err) {
-//         console.log(err);
-//         res.status(400).send(err);
-//     }
-// }
-
 module.exports = { createBoard, getSelectedBoards };
