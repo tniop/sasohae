@@ -20,17 +20,10 @@ router.get("/gifts/result", getGiftResult); // addGiftResult 로 함께 처리
 router.put("/gifts/result", reviseGiftFeedback);
 router.get("/gifts/random", getRandomGift);
 
-/* admin 초기 DB 셋팅 */
+/* admin 초기 DB 셋팅 
 router.post("/admin/gifts", createGift);
 router.post("/admin/gifts/questions", createGiftQuestions);
 router.post("/admin/gifts/statistics", createStatistic);
+*/
 
-
-/* 은지 담당*/
-// getGiftQuestion 선물추천 옵션 받기(설문): get  /api/gifts
-// addGiftResult 선물추천(결과) "POST":     post /api/gifts
-// getGiftResult 선물추천(결과) "GET":      get  /api/gifts/result
-// reviseGiftFeedback 선물추천 좋아요 반영:  put  /api/gifts/result
-// getRandomGift 선물추천 랜덤:             get  /api/gifts/random
- 
 module.exports = router;
