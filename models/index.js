@@ -4,7 +4,7 @@ const connect = () => {
     //   mongoose
     //     .connect('mongodb://test:test@localhost:27017/admin', {
     mongoose
-        .connect("mongodb://localhost:27017/sasohae", {
+        .connect("mongodb://localhost:27017/sasohaeTest", {
             // useNewUrlParser: true,
             // useUnifiedTopology: true,
             // ignoreUndefined: true,
