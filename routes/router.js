@@ -5,7 +5,6 @@ const router = express.Router();
 const { 
     getGiftQuestion,
     addGiftResult,
-    getGiftResult,
     reviseGiftFeedback,
     getRandomGift, 
 } = require("./controllers/gifts");
@@ -41,7 +40,6 @@ router.put("/money", useMoney);
 
 router.get("/gifts", useGift, getGiftQuestion);
 router.post("/gifts", addGiftResult);
-router.get("/gifts/result", getGiftResult); // addGiftResult 로 함께 처리
 router.put("/gifts/result", reviseGiftFeedback);
 router.get("/gifts/random", useRandomGift, getRandomGift);
 
