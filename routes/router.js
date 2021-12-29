@@ -14,6 +14,10 @@ const {
     updateBoardUsersCnt,
     updateBoardWriteUsersCnt,
 } = require("../middleware/boardsCount");
+const {
+    updateSurveyUsersCnt,
+    updateRandomUsersCnt,
+} = require("../middleware/giftsCount");
 
 
 router.post("/comments", updateBoardWriteUsersCnt, createBoard);
@@ -24,11 +28,11 @@ router.post("/admin/menu", upload.single("img"), createMenu);
 router.post("/admin/money", createMoneyQuestions);
 router.post("/admin/gifts/questions", createGiftQuestions);
 
-router.get("/gifts", getGiftQuestion);
+router.get("/gifts", updateSurveyUsersCnt, getGiftQuestion);
 router.post("/gifts", addGiftResult);
 router.get("/gifts/result", getGiftResult); // addGiftResult 로 함께 처리
 router.put("/gifts/result", reviseGiftFeedback);
-router.get("/gifts/random", getRandomGift);
+router.get("/gifts/random", updateRandomUsersCnt, getRandomGift);
 
 router.put("/main", userVisit);
 router.put("/main/money", useMoney);
