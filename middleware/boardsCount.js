@@ -1,9 +1,11 @@
 const statistics = require("../models/statistics");
 
-// statistic의 고민 끄나풀 단순 이용자 집계를 위한 함수
+// statistics의 고민 끄나풀 단순 이용자 집계를 위한 함수
 async function updateBoardUsersCnt(req, res, next) {
     try {
-        if(req.params==="0"){
+        const params = req.params.commentIdx;
+        if (params == "0") {
+
             const countData = await statistics.findOne({ statistic_id: 1 });
             if (!countData) {
                 await statistics.create({});
@@ -14,7 +16,6 @@ async function updateBoardUsersCnt(req, res, next) {
                     { statistic_id: 1 },
                     { $set: { boardUsersCnt: boardUsersCnt } }
                 );
-                next();
             } else {
                 let boardUsersCnt = countData.boardUsersCnt;
                 boardUsersCnt++;
@@ -22,16 +23,15 @@ async function updateBoardUsersCnt(req, res, next) {
                     { statistic_id: 1 },
                     { $set: { boardUsersCnt: boardUsersCnt } }
                 );
-                next();
             }
         }
-        
+        next();
     } catch (err) {
         console.log(err);
     }
 }
 
-// statistic의 고민 끄나풀 실 이용자(게시글 작성자) 집계를 위한 함수
+// statistics의 고민 끄나풀 실 이용자(게시글 작성자) 집계를 위한 함수
 async function updateBoardWriteUsersCnt(req, res, next) {
     try {
         const countData = await statistics.findOne({ statistic_id: 1 });
@@ -44,7 +44,6 @@ async function updateBoardWriteUsersCnt(req, res, next) {
                 { statistic_id: 1 },
                 { $set: { boardWriteUsersCnt: boardWriteUsersCnt } }
             );
-            next();
         } else {
             let boardWriteUsersCnt = countData.boardWriteUsersCnt;
             boardWriteUsersCnt++;
@@ -52,8 +51,8 @@ async function updateBoardWriteUsersCnt(req, res, next) {
                 { statistic_id: 1 },
                 { $set: { boardWriteUsersCnt: boardWriteUsersCnt } }
             );
-            next();
         }
+        next();
     } catch (err) {
         console.log(err);
     }
