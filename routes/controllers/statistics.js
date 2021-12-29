@@ -7,14 +7,14 @@ async function userVisit(req, res) {
         let statisticExist = await statistic.find({}).sort('-statistic_id').limit(1);
         if (statisticExist.length == 0) {
             await statistic.create({
-                statistic_id : 1,
-                totVisitorCnt : 0,
-                giftSurveyUsersCnt : 0,
-                giftRandomUsersCnt : 0,
-                moneyUsersCnt : 0,
-                menuUsersCnt : 0,
-                boardUsersCnt : 0,
-                boardWriteUsersCnt : 0,
+                statistic_id,
+                totVisitorCnt,
+                giftSurveyUsersCnt,
+                giftRandomUsersCnt,
+                moneyUsersCnt,
+                menuUsersCnt,
+                boardUsersCnt,
+                boardWriteUsersCnt,
               });
         }
         else {

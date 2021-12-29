@@ -3,7 +3,7 @@ const statistics = require("../models/statistics");
 // statistic의 고민 끄나풀 단순 이용자 집계를 위한 함수
 async function updateBoardUsersCnt(req, res, next) {
     try {
-        if(req.params==0){
+        if(req.params==="0"){
             const countData = await statistics.findOne({ statistic_id: 1 });
             if (!countData) {
                 await statistics.create({});
