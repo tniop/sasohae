@@ -14,18 +14,6 @@
   "consumes": [],
   "produces": [],
   "paths": {
-    "/": {
-      "get": {
-        "tags": [],
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/comments": {
       "post": {
         "tags": [],
@@ -66,6 +54,296 @@
             "type": "string"
           }
         ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/admin/gifts": {
+      "post": {
+        "tags": [],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "giftName": {
+                  "example": "any"
+                },
+                "giftTarget": {
+                  "example": "any"
+                },
+                "giftEvent": {
+                  "example": "any"
+                },
+                "sex": {
+                  "example": "any"
+                },
+                "age": {
+                  "example": "any"
+                },
+                "giftAnswerExpensive": {
+                  "example": "any"
+                },
+                "giftAnswerPersonality": {
+                  "example": "any"
+                },
+                "giftAnswerEmotional": {
+                  "example": "any"
+                },
+                "giftAnswerTrendy": {
+                  "example": "any"
+                },
+                "giftLikeCnt": {
+                  "example": "any"
+                },
+                "giftResultCnt": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/admin/menu": {
+      "post": {
+        "tags": [],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "menuType": {
+                  "example": "any"
+                },
+                "menuStyle": {
+                  "example": "any"
+                },
+                "menuWith": {
+                  "example": "any"
+                },
+                "menuName": {
+                  "example": "any"
+                },
+                "menuLikeCnt": {
+                  "example": "any"
+                },
+                "menuResultCnt": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/admin/money": {
+      "post": {
+        "tags": [],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "moneyQuestionNum": {
+                  "example": "any"
+                },
+                "moneyQuestion": {
+                  "example": "any"
+                },
+                "positiveAnswerQuestion": {
+                  "example": "any"
+                },
+                "negativeAnswerQuestion": {
+                  "example": "any"
+                },
+                "positiveChangeValue": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/admin/gifts/questions": {
+      "post": {
+        "tags": [],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "giftQuestion": {
+                  "example": "any"
+                },
+                "giftQuestionType": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          }
+        }
+      }
+    },
+    "/api/gifts": {
+      "get": {
+        "tags": [],
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "post": {
+        "tags": [],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "selectedGift": {
+                  "example": "any"
+                },
+                "giftTarget": {
+                  "example": "any"
+                },
+                "giftEvent": {
+                  "example": "any"
+                },
+                "sex": {
+                  "example": "any"
+                },
+                "age": {
+                  "example": "any"
+                },
+                "giftAnswerExpensive": {
+                  "example": "any"
+                },
+                "giftAnswerPersonality": {
+                  "example": "any"
+                },
+                "giftAnswerEmotional": {
+                  "example": "any"
+                },
+                "giftAnswerTrendy": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/gifts/result": {
+      "get": {
+        "tags": [],
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
+      "put": {
+        "tags": [],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "selectedGift_id": {
+                  "example": "any"
+                },
+                "selectedGift": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/gifts/random": {
+      "get": {
+        "tags": [],
+        "description": "",
+        "parameters": [],
         "responses": {
           "200": {
             "description": "OK"

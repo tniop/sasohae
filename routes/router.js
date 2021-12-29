@@ -5,9 +5,7 @@ const { getGiftQuestion, addGiftResult, getGiftResult, reviseGiftFeedback, getRa
 const { userVisit, useMoney, useMenu } = require("./controllers/main");
 const { getMoneyQuestion, moneyQuestionAnswer } = require("./controllers/money");
 const { getMenu, likeMenu, createMenu } = require("./controllers/menus");
-const createGift = require("./controllers/gifts");
 
-const createGiftQuestions = require("./controllers/giftQuestions");
 const createMoneyQuestions = require("./controllers/moneyQuestions");
 
 const upload = require("../middleware/upload");
