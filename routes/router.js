@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const { createBoard, getSelectedBoards } = require("./controllers/boards");
 const { getGiftQuestion, addGiftResult, getGiftResult, reviseGiftFeedback, getRandomGift, createGift, createGiftQuestions, createStatistic } = require("./controllers/gifts");
-const { userVisit, useMoney, useMenu } = require("./controllers/main");
+const { userVisit, useMoney, useMenu } = require("./controllers/statistics");
 const { getMoneyQuestion, moneyQuestionAnswer } = require("./controllers/money");
 const { getMenu, likeMenu, createMenu } = require("./controllers/menus");
 
