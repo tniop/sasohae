@@ -1,18 +1,21 @@
 const express = require("express");
 const router = express.Router();
 const { createBoard, getSelectedBoards } = require("./controllers/boards");
+const { getGiftQuestion, addGiftResult, getGiftResult, reviseGiftFeedback, getRandomGift, createGift, createGiftQuestions, createStatistic } = require("./controllers/gifts");
+const { userVisit, useMoney, useMenu } = require("./controllers/main");
+const { getMoneyQuestion, moneyQuestionAnswer } = require("./controllers/money");
+const { getMenu, likeMenu, createMenu } = require("./controllers/menus");
 const createGift = require("./controllers/gifts");
-const createMenu = require("./controllers/menus");
+
 const createGiftQuestions = require("./controllers/giftQuestions");
 const createMoneyQuestions = require("./controllers/moneyQuestions");
+
 const upload = require("../middleware/upload");
 const imgUpload = require("./controllers/imgUpload");
 const {
     updateBoardUsersCnt,
     updateBoardWriteUsersCnt,
 } = require("../middleware/boardsCount");
-const { getGiftQuestion, addGiftResult, getGiftResult, reviseGiftFeedback, getRandomGift, createGift, createGiftQuestions, createStatistic } = require("./controllers/gifts");
-
 
 
 router.post("/comments", updateBoardWriteUsersCnt, createBoard);
@@ -28,5 +31,21 @@ router.post("/gifts", addGiftResult);
 router.get("/gifts/result", getGiftResult); // addGiftResult 로 함께 처리
 router.put("/gifts/result", reviseGiftFeedback);
 router.get("/gifts/random", getRandomGift);
+
+router.put("/main", userVisit);
+router.put("/main/money", useMoney);
+router.put("/main/menu", useMenu);
+
+router.get("/money", getMoneyQuestion);
+router.get("/money/:menuQuestion", moneyQuestionAnswer);
+
+router.get("/menu", getMenu);
+router.put("/menu", likeMenu);
+
+/* admin 초기 DB 셋팅 
+router.post("/admin/gifts", createGift);
+router.post("/admin/gifts/questions", createGiftQuestions);
+router.post("/admin/gifts/statistics", createStatistic);
+*/
 
 module.exports = router;
