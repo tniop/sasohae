@@ -49,7 +49,7 @@ async function getGiftQuestion(req, res) {
         const giftQuestionTrendy = await giftQuestions.find({ "giftQuestionType": "trendy" });
 
         // giftQuestionPersonality: [”질문1”, ”질문2”, ...], giftQuestionEmotion, giftQuestionTrendy
-        res.status(200).json({ success: true, giftQuestionPersonality, giftQuestionEmotional, giftQuestionTrendy }); 
+        res.status(200).send({ success: true, giftQuestionPersonality, giftQuestionEmotional, giftQuestionTrendy }); 
 
     } catch (err) {
         console.log(err);
@@ -59,7 +59,7 @@ async function getGiftQuestion(req, res) {
     }
 }
 
-// 선물추천(결과) "POST" => DONE
+// 선물추천(결과) "POST" 
 async function addGiftResult(req, res) {
     try {
         // 참고: selectedGift는 null로 들어가고, 좋아요 피드백을 받으면 해당 선물 이름으로 update됨
@@ -87,13 +87,6 @@ async function addGiftResult(req, res) {
             giftAnswerEmotional,
             giftAnswerTrendy,
         });
-        
-        // statistic 컬렉션의 giftSurveyUsersCnt++
-        const statistic_id = 1;
-        const surveyUsersCnt = await statistic.findOne({ statistic_id });
-        giftSurveyUsersCntPlus = surveyUsersCnt.giftSurveyUsersCnt + 1; 
-
-        await statistic.updateOne({ statistic_id }, { $set: { giftSurveyUsersCnt: giftSurveyUsersCntPlus } }); // giftSurveyUsersCnt++ DB 반영
         
         // gifts 컬렉션에서 답변에 맞는 선물 리스트 담기 
         if (giftEvent == "하찮은선물") { 
@@ -137,7 +130,7 @@ async function getGiftResult(req, res) {
     }
 }
 
-// 선물추천 Like 반영 (giftUserData의 selectedGift, gifts의 giftLikeCnt 업데이트)=> DONE
+// 선물추천 Like 반영 (giftUserData의 selectedGift, gifts의 giftLikeCnt 업데이트)
 async function reviseGiftFeedback(req, res) {
     try {
         // giftUserData 테이블에 Like 반영
@@ -146,13 +139,17 @@ async function reviseGiftFeedback(req, res) {
         await giftUserData.updateOne({ selectedGift_id }, { $set: { selectedGift: selectedGift } });
 
         // gifts 테이블에 Like 반영
-        let giftName = selectedGift;
-        const getGiftLikeCnt = await gifts.findOne({ [giftName]: giftName }); 
-        giftLikeCntPlus = getGiftLikeCnt.giftLikeCnt + 1;
+        const giftName = selectedGift;
+        console.log(giftName);
+        const likeGiftExist = await gifts.findOne({ giftName: giftName }); 
+        console.log("likeGiftExist: " + likeGiftExist);
 
-        await gifts.updateOne({ [giftName]: giftName }, { $set: { giftLikeCnt: giftLikeCntPlus } });
+            await gifts.updateOne(
+                { giftName },
+                { $set: { giftLikeCnt: giftLikeCnt + 1 } }
+            );
 
-        res.status(200).json({ success: true });
+        res.status(200).send({ success: true });
 
     } catch (err) {
         console.log(err);
@@ -162,18 +159,12 @@ async function reviseGiftFeedback(req, res) {
     }
 }
 
-// 선물추천 랜덤 : giftRandomUsersCnt++  => DONE
+// 선물추천 랜덤 => DONE
 async function getRandomGift(req, res) {
     try {
-        const statistic_id = 1;
-        const randomUsersCnt = await statistic.findOne({ statistic_id }); 
-        giftRandomUsersCntPlus = randomUsersCnt.giftRandomUsersCnt + 1; // giftRandomUsersCnt++
-
-        await statistic.updateOne({ statistic_id }, { $set: { giftRandomUsersCnt: giftRandomUsersCntPlus } }); // giftRandomUsersCnt++ DB 반영
-
         const randomGifts = await gifts.find({ });
 
-        res.status(200).json({ success: true, randomGifts }); 
+        res.status(200).send({ success: true, randomGifts }); 
 
     } catch (err) {
         console.log(err);
