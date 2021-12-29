@@ -2,7 +2,7 @@ const gifts = require("../../models/gifts");
 const giftQuestions = require("../../models/giftQuestions");
 const giftUserData = require("../../models/giftUserData");
 
-// 선물추천 옵션 받기(설문) => DONE
+// 선물추천 옵션 받기(설문) 
 async function getGiftQuestion(req, res) {
     try {
         const giftQuestionPersonality = await giftQuestions.find({
@@ -30,7 +30,7 @@ async function getGiftQuestion(req, res) {
     }
 }
 
-// 선물추천(결과) "POST"
+// 선물추천(결과)
 async function addGiftResult(req, res) {
     try {
         // 참고: selectedGift는 null로 들어가고, 좋아요 피드백을 받으면 해당 선물 이름으로 update됨
@@ -71,24 +71,19 @@ async function addGiftResult(req, res) {
             });
         } else {
             const all = "무관"; //엑셀 테이블에서 "*"
-
+            console.log(giftEvent)
             const surveyGifts = await gifts.find({
-                $or: [{ giftTarget: giftTarget }, { giftTarget: all }],
-                $or: [{ giftEvent: giftEvent }, { giftEvent: all }],
-                $or: [{ sex: sex }, { sex: all }],
-                $or: [{ age: age }, { age: all }],
-                $or: [
-                    { giftAnswerTrendy: giftAnswerTrendy },
-                    { giftAnswerTrendy: all },
-                ],
-                $or: [
-                    { giftAnswerPersonality: [giftAnswerPersonality[1]] },
-                    { giftAnswerPersonality: all },
-                ],
-                $or: [
-                    { giftAnswerEmotional: [giftAnswerEmotional[1]] },
-                    { giftAnswerEmotional: all },
-                ],
+                $and: [{
+                    giftTarget: { $in: [all, giftTarget] },
+                    giftEvent: { $in: [all, giftEvent] },
+                    sex: { $in: [all, sex] },
+                    age: { $in: [all, age] },
+                    giftAnswerTrendy: { $in: [all, giftAnswerTrendy[1]] },
+                    giftAnswerPersonality: { $in: [all, giftAnswerPersonality[1]] },
+                    giftAnswerEmotional: { $in: [all, giftAnswerEmotional[1]] },
+
+                }],
+               
             });
             res.status(200).send({
                 success: true,
@@ -104,19 +99,8 @@ async function addGiftResult(req, res) {
     }
 }
 
-// 선물추천(결과) "GET" : giftSurveyUsersCnt++ => 이 코드 미사용
-async function getGiftResult(req, res) {
-    try {
-        // 위에서 POST 로 처리
-    } catch (err) {
-        console.log(err);
-        res.status(400).send({
-            errorMessage: "요청을 처리하지 못했습니다.",
-        });
-    }
-}
 
-// 선물추천 Like 반영 (giftUserData의 selectedGift, gifts의 giftLikeCnt 업데이트)
+// 선물추천 Like 반영 
 async function reviseGiftFeedback(req, res) {
     try {
         // giftUserData 테이블에 Like 반영
@@ -129,13 +113,12 @@ async function reviseGiftFeedback(req, res) {
 
         // gifts 테이블에 Like 반영
         const giftName = selectedGift;
-        console.log(giftName);
-        const likeGiftExist = await gifts.findOne({ giftName: giftName });
-        console.log("likeGiftExist: " + likeGiftExist);
-        const {giftLikeCnt} = await gifts.findOne({ giftName: giftName });
+
+        const likeGiftExist = await gifts.findOne({ giftName: giftName }); // 해당 라인 지우고 아래 코드로 실행하면 될듯?
+        const { giftLikeCnt } = await gifts.findOne({ giftName: giftName });
 
         await gifts.updateOne(
-            { giftName:giftName },
+            { giftName: giftName },
             { $set: { giftLikeCnt: giftLikeCnt + 1 } }
         );
 
@@ -148,7 +131,7 @@ async function reviseGiftFeedback(req, res) {
     }
 }
 
-// 선물추천 랜덤 => DONE
+// 선물추천 랜덤 
 async function getRandomGift(req, res) {
     try {
         const randomGifts = await gifts.find({});
@@ -162,7 +145,6 @@ async function getRandomGift(req, res) {
 module.exports = {
     getGiftQuestion,
     addGiftResult,
-    getGiftResult,
     reviseGiftFeedback,
     getRandomGift,
 };
