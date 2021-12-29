@@ -4,14 +4,14 @@ const MoneyQuestions = require("../../models/moneyQuestions");
 async function createMoneyQuestions(req, res) {
     try {
         const {
-            moneyQuestionNum,
+            moneyQuestion_id,
             moneyQuestion,
             positiveAnswerQuestion,
             negativeAnswerQuestion,
             positiveChangeValue,
         } = req.body;
         await MoneyQuestions.create({
-            moneyQuestionNum,
+            moneyQuestion_id,
             moneyQuestion,
             positiveAnswerQuestion,
             negativeAnswerQuestion,
