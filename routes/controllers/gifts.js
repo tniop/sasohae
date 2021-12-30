@@ -64,6 +64,10 @@ async function addGiftResult(req, res) {
 
             const surveyGifts = await gifts.find({
                     giftEvent: { $elemMatch: { $in: [ "9" ] } },
+            }, {
+                _id: false, giftTarget: false, giftEvent: false, sex: false, age: false,
+                giftAnswerExpensive: false, giftAnswerPersonality: false, giftAnswerEmotional: false, giftAnswerTrendy: false,
+                giftResultCnt: false
             });
             res.status(200).send({
                 success: true,
@@ -93,7 +97,12 @@ async function addGiftResult(req, res) {
                     giftAnswerTrendy: { $in: [all, giftAnswerT] },
                 }],
 
+            }, {
+                _id: false, giftTarget: false, giftEvent: false, sex: false, age: false,
+                giftAnswerExpensive: false, giftAnswerPersonality: false, giftAnswerEmotional: false, giftAnswerTrendy: false,
+                giftResultCnt: false
             });
+
             res.status(200).send({
                 success: true,
                 selectedGift_id: null,
@@ -142,7 +151,13 @@ async function reviseGiftFeedback(req, res) {
 // 선물추천 랜덤 
 async function getRandomGift(req, res) {
     try {
-        const randomGifts = await gifts.find({});
+        const randomGifts = await gifts.find({
+            },
+            {
+                _id: false, giftTarget: false, giftEvent: false, sex: false, age: false,
+                giftAnswerExpensive: false, giftAnswerPersonality: false, giftAnswerEmotional: false, giftAnswerTrendy: false,
+                giftResultCnt: false
+        });
 
         res.status(200).send({ success: true, randomGifts });
     } catch (err) {
