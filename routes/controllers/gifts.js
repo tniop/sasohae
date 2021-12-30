@@ -14,8 +14,7 @@ async function getGiftQuestion(req, res) {
         const giftQuestionTrendy = await giftQuestions.find({
             giftQuestionType: "trendy",
         });
-
-        // giftQuestionPersonality: [”질문1”, ”질문2”, ...], giftQuestionEmotion, giftQuestionTrendy
+        
         res.status(200).send({
             success: true,
             giftQuestionPersonality,
@@ -59,39 +58,38 @@ async function addGiftResult(req, res) {
             giftAnswerTrendy,
         });
 
-        // gifts 컬렉션에서 답변에 맞는 선물 리스트 담기
-        if (giftEvent == "하찮은선물") {
+        /* gifts 컬렉션에서 답변에 맞는 선물 리스트 담기 */
+        // 하찮은 선물인 경우
+        if (giftTarget === "8" || giftEvent === "9") {
+
             const surveyGifts = await gifts.find({
-                giftEvent: giftEvent,
+                    giftEvent: { $elemMatch: { $in: [ "9" ] } },
             });
             res.status(200).send({
                 success: true,
                 selectedGift_id: null,
                 surveyGifts,
             });
+
+        // 하찮은 선물이 아닌 경우
         } else {
-            const all = "무관"; //엑셀 테이블에서 "*"
+            const all = "*"; // 전체 항목
+            // console.log("giftTarget: " + giftTarget, "giftEvent: " + giftEvent, "sex: " + sex, "age: " + age, "giftAnswerExpensive: " + giftAnswerExpensive)
 
             const surveyGifts = await gifts.find({
-              
-                    // giftTarget: "무관",
                     // giftTarget: { $elemMatch: { $in: [giftTarget] } } 배열 내부 값 비교 가능
+                    //  $or: [{ giftTarget: { $elemMatch: { $in: [all, giftTarget] } } }], 
                 $and: [{
-                    giftTarget: { $elemMatch: { $in: [giftTarget, all] } }, 
-                    giftEvent: { $elemMatch: { $in: [giftEvent, all] } } 
+                    giftTarget: { $elemMatch: { $in: [all, giftTarget] } }, 
+                    giftEvent: { $elemMatch: { $in: [all, giftEvent] } }, 
+                    sex: { $in: [all, sex]  }, 
+                    age: { $elemMatch: { $in: [all, age] } }, 
+                    giftAnswerExpensive: { $in: [all, giftAnswerExpensive] },                    
+                    giftAnswerPersonality: { $in: [all, giftAnswerPersonality] },
+                    giftAnswerEmotional: { $in: [all, giftAnswerEmotional] },
+                    giftAnswerTrendy: { $in: [all, giftAnswerTrendy] },
                 }],
 
-                // $and: [{
-                //     giftTarget: { $in: [all, giftTarget] },
-                //     giftEvent: { $in: [all, giftEvent] },
-                //     sex: { $in: [all, sex] },
-                //     age: { $in: [all, age] },
-                //     giftAnswerTrendy: { $in: [all, giftAnswerTrendy[1]] },
-                //     giftAnswerPersonality: { $in: [all, giftAnswerPersonality[1]] },
-                //     giftAnswerEmotional: { $in: [all, giftAnswerEmotional[1]] },
-
-                // }],
-               
             });
             res.status(200).send({
                 success: true,
@@ -106,7 +104,6 @@ async function addGiftResult(req, res) {
         });
     }
 }
-
 
 // 선물추천 Like 반영 
 async function reviseGiftFeedback(req, res) {
