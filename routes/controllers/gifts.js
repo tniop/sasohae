@@ -74,7 +74,10 @@ async function addGiftResult(req, res) {
         // 하찮은 선물이 아닌 경우
         } else {
             const all = "*"; // 전체 항목
-            // console.log("giftTarget: " + giftTarget, "giftEvent: " + giftEvent, "sex: " + sex, "age: " + age, "giftAnswerExpensive: " + giftAnswerExpensive)
+
+            const giftAnswerP = giftAnswerPersonality[1];
+            const giftAnswerE = giftAnswerEmotional[1];
+            const giftAnswerT = giftAnswerTrendy[1];
 
             const surveyGifts = await gifts.find({
                     // giftTarget: { $elemMatch: { $in: [giftTarget] } } 배열 내부 값 비교 가능
@@ -85,9 +88,9 @@ async function addGiftResult(req, res) {
                     sex: { $in: [all, sex]  }, 
                     age: { $elemMatch: { $in: [all, age] } }, 
                     giftAnswerExpensive: { $in: [all, giftAnswerExpensive] },                    
-                    giftAnswerPersonality: { $in: [all, giftAnswerPersonality] },
-                    giftAnswerEmotional: { $in: [all, giftAnswerEmotional] },
-                    giftAnswerTrendy: { $in: [all, giftAnswerTrendy] },
+                    giftAnswerPersonality: { $in: [all, giftAnswerP] },
+                    giftAnswerEmotional: { $in: [all, giftAnswerE] },
+                    giftAnswerTrendy: { $in: [all, giftAnswerT] },
                 }],
 
             });
