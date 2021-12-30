@@ -71,18 +71,26 @@ async function addGiftResult(req, res) {
             });
         } else {
             const all = "무관"; //엑셀 테이블에서 "*"
-            console.log(giftEvent)
-            const surveyGifts = await gifts.find({
-                $and: [{
-                    giftTarget: { $in: [all, giftTarget] },
-                    giftEvent: { $in: [all, giftEvent] },
-                    sex: { $in: [all, sex] },
-                    age: { $in: [all, age] },
-                    giftAnswerTrendy: { $in: [all, giftAnswerTrendy[1]] },
-                    giftAnswerPersonality: { $in: [all, giftAnswerPersonality[1]] },
-                    giftAnswerEmotional: { $in: [all, giftAnswerEmotional[1]] },
 
+            const surveyGifts = await gifts.find({
+              
+                    // giftTarget: "무관",
+                    // giftTarget: { $elemMatch: { $in: [giftTarget] } } 배열 내부 값 비교 가능
+                $and: [{
+                    giftTarget: { $elemMatch: { $in: [giftTarget, all] } }, 
+                    giftEvent: { $elemMatch: { $in: [giftEvent, all] } } 
                 }],
+
+                // $and: [{
+                //     giftTarget: { $in: [all, giftTarget] },
+                //     giftEvent: { $in: [all, giftEvent] },
+                //     sex: { $in: [all, sex] },
+                //     age: { $in: [all, age] },
+                //     giftAnswerTrendy: { $in: [all, giftAnswerTrendy[1]] },
+                //     giftAnswerPersonality: { $in: [all, giftAnswerPersonality[1]] },
+                //     giftAnswerEmotional: { $in: [all, giftAnswerEmotional[1]] },
+
+                // }],
                
             });
             res.status(200).send({
