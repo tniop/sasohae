@@ -16,16 +16,19 @@ const gifts = new mongoose.Schema({
         type: String,
     },
     giftTarget: {
-        type: String,
+        type: Array,
+        default: [],
     },
     giftEvent: {
-        type: String,
+        type: Array,
+        default: [],
     },
     sex: {
         type: String,
     },
     age: {
-        type: String,
+        type: Array,
+        default: [],
     },
     giftAnswerExpensive: {
         type: String,
