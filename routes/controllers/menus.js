@@ -7,6 +7,14 @@ async function getMenu(req, res) {
             menuType: menuType,
             menuStyle: menuStyle,
             menuWith: menuWith,
+        }, {
+            _id: false,
+            menuType: false,
+            menuStyle: false,
+            menuWith: false,
+            menuResultCnt: false,
+            menu_id: false,
+            __v: false
         });
         res.status(200).send(menuList);
     } catch (err) {
@@ -18,7 +26,8 @@ async function likeMenu(req, res) {
     try {
         const { menuName } = req.body;
         const likeMenuExist = await menus.findOne({ menuName: menuName });
-        if (!likeMenuExist) {
+        if (likeMenuExist) {
+            const menuLikeCnt = likeMenuExist.menuLikeCnt;
             await menus.updateOne(
                 { menuName },
                 { $set: { menuLikeCnt: menuLikeCnt + 1 } }

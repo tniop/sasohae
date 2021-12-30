@@ -407,6 +407,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "menuName": {
+                  "example": "any"
+                },
                 "menuType": {
                   "example": "any"
                 },
@@ -414,9 +417,6 @@
                   "example": "any"
                 },
                 "menuWith": {
-                  "example": "any"
-                },
-                "menuName": {
                   "example": "any"
                 },
                 "menuLikeCnt": {
