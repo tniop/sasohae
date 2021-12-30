@@ -9,25 +9,27 @@ const menus = new mongoose.Schema({
         unique: true,
         default: 0,
     },
+    menuName: {
+        type: String,
+        required: true,
+    },
     menuUrl: {
         type: String,
         required: true,
     },
     menuType: {
-        type: String,
+        type: Array,
         required: true,
+        default: [],
     },
     menuStyle: {
         type: String,
         required: true,
     },
     menuWith: {
-        type: String,
+        type: Array,
         required: true,
-    },
-    menuName: {
-        type: String,
-        required: true,
+        default: [],
     },
     menuLikeCnt: {
         type: Number,
