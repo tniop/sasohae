@@ -54,7 +54,7 @@ router.get("/comments/:commentIdx", getSelectedBoards);
 
 // router.post("/admin/image", upload.single("img"), imgUpload);
 
-router.post("/admin/gifts", upload.single("img"), createGift); // 선물 목록 생성 시 (이미지 제외 코드) router.post("/admin/gifts",  createGift);
+router.post("/admin/gifts", upload.single("img"), createGift); 
 router.post("/admin/gifts/questions", createGiftQuestions);
 router.post("/admin/money", createMoneyQuestions);
 router.post("/admin/menu", upload.single("img"), createMenu);

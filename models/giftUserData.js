@@ -24,6 +24,9 @@ const giftsUserData = new mongoose.Schema({
     age: {
         type: String,
     },
+    giftAnswerExpensive: {
+        type: String,
+    },
     giftAnswerPersonality: {
         type: Array,
         default: [],
@@ -35,9 +38,6 @@ const giftsUserData = new mongoose.Schema({
     giftAnswerTrendy: {
         type: Array,
         default: [],
-    },
-    giftAnswerExpensive: {
-        type: String,
     },
 });
 
