@@ -5,15 +5,18 @@ const giftUserData = require("../../models/giftUserData");
 // 선물추천 옵션 받기(설문) 
 async function getGiftQuestion(req, res) {
     try {
-        const giftQuestionPersonality = await giftQuestions.find({
-            giftQuestionType: "personality",
-        });
-        const giftQuestionEmotional = await giftQuestions.find({
-            giftQuestionType: "emotional",
-        });
-        const giftQuestionTrendy = await giftQuestions.find({
-            giftQuestionType: "trendy",
-        });
+        const giftQuestionPersonality = await giftQuestions.find(
+            { giftQuestionType: "personality" },
+            { _id: false, giftQuestionType: false }
+        );
+        const giftQuestionEmotional = await giftQuestions.find(
+            { giftQuestionType: "emotional" },
+            { _id: false, giftQuestionType: false }
+        );
+        const giftQuestionTrendy = await giftQuestions.find(
+            { giftQuestionType: "trendy" },
+            { _id: false, giftQuestionType: false }
+        );
         
         res.status(200).send({
             success: true,
