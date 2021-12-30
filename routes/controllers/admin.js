@@ -84,19 +84,19 @@ async function createMenu(req, res) {
     try {
         const menuUrl = req.file.location;
         const {
+            menuName,
             menuType,
             menuStyle,
             menuWith,
-            menuName,
             menuLikeCnt,
             menuResultCnt,
         } = req.body;
         await menus.create({
+            menuName,
             menuUrl,
             menuType,
             menuStyle,
             menuWith,
-            menuName,
             menuLikeCnt,
             menuResultCnt,
         });
