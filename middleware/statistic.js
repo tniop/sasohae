@@ -95,18 +95,27 @@ async function useMenu(req, res, next) {
 }
 
 // 고민끄나풀 방문자 집계함수
-async function userVisitBoard(req, res) {
+async function userVisitBoard(req, res, next) {
     try {
-        const statisticExist = await statistics.findOne({ statistic_id: 1 });
-        if (!statisticExist) {
-            await statistics.create({});
+        const counter = req.query.visited;
+        if (!counter) {
+            next();
+        } else if (counter == "up") {
+            const statisticExist = await statistics.findOne({
+                statistic_id: 1,
+            });
+            if (!statisticExist) {
+                await statistics.create({});
+            }
+            const { boardUsersCnt } = await statistics.findOne({
+                statistic_id: 1,
+            });
+            await statistics.updateOne(
+                { statistic_id: 1 },
+                { $set: { boardUsersCnt: boardUsersCnt + 1 } }
+            );
+            next();
         }
-        const { boardUsersCnt } = await statistics.findOne({ statistic_id: 1 });
-        await statistics.updateOne(
-            { statistic_id: 1 },
-            { $set: { boardUsersCnt: boardUsersCnt + 1 } }
-        );
-        res.status(200).send();
     } catch (err) {
         console.log("Error : " + err);
     }

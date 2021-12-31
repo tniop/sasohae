@@ -16,20 +16,11 @@ async function createBoard(req, res) {
     }
 }
 
-// 무한 스크롤 사용을 위한 함수 > 요청에 대하여 10개씩 잘라 보낸다.
+// 무한 스크롤 사용을 위한 함수 > 요청에 대하여 10개씩 db로부터 잘라 보낸다.
 async function getSelectedBoards(req, res) {
     try {
-        const board_id = req.params;
-        const startNumber = Number(board_id.commentIdx);
-        if (!req.params || startNumber == 0) {
-            const selectedBoards = await boards
-                .find({})
-                .limit(10)
-                .skip(startNumber)
-                .sort({ _id: -1 });
-            res.status(200).send(selectedBoards);
-            return;
-        }
+        const board_id = req.query.commentIdx;
+        const startNumber = Number(board_id);
         const selectedBoards = await boards
             .find({})
             .limit(10)

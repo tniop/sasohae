@@ -2,20 +2,23 @@ const express = require("express");
 const router = express.Router();
 
 /* ==================== controllers ====================*/
-const { 
+const {
     getGiftQuestion,
     addGiftResult,
     reviseGiftFeedback,
-    getRandomGift, 
+    getRandomGift,
 } = require("./controllers/gifts");
-const { getMoneyQuestion, moneyQuestionAnswer } = require("./controllers/money");
+const {
+    getMoneyQuestion,
+    moneyQuestionAnswer,
+} = require("./controllers/money");
 const { getMenu, likeMenu } = require("./controllers/menus");
 const { createBoard, getSelectedBoards } = require("./controllers/boards");
-const {     
+const {
     createMoneyQuestions,
     createMenu,
     createGift,
-    createGiftQuestions, 
+    createGiftQuestions,
 } = require("./controllers/admin");
 const imgUpload = require("./controllers/imgUpload");
 /* ==================================================*/
@@ -35,8 +38,8 @@ const {
 
 /* ==================== router ====================*/
 router.put("/main", userVisit);
-router.put("/comments", userVisitBoard);
 router.put("/money", useMoney);
+// router.put("/comments", userVisitBoard);
 
 router.get("/gifts", useGift, getGiftQuestion);
 router.post("/gifts", addGiftResult);
@@ -50,11 +53,11 @@ router.get("/menu", getMenu);
 router.put("/menu", useMenu, likeMenu);
 
 router.post("/comments", writeBoard, createBoard);
-router.get("/comments/:commentIdx", getSelectedBoards);
+router.get("/comments", userVisitBoard, getSelectedBoards);
 
 // router.post("/admin/image", upload.single("img"), imgUpload);
 
-router.post("/admin/gifts", upload.single("img"), createGift); 
+router.post("/admin/gifts", upload.single("img"), createGift);
 router.post("/admin/gifts/questions", createGiftQuestions);
 router.post("/admin/money", createMoneyQuestions);
 router.post("/admin/menu", upload.single("img"), createMenu);
