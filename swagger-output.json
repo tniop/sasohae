@@ -5,11 +5,11 @@
     "description": "Description",
     "version": "1.0.0"
   },
-  "host": "localhost:3000",
+  "host": "tniop.shop",
   "basePath": "/",
   "tags": [],
   "schemes": [
-    "http"
+    "https"
   ],
   "consumes": [],
   "produces": [],
@@ -407,6 +407,9 @@
             "schema": {
               "type": "object",
               "properties": {
+                "menuName": {
+                  "example": "any"
+                },
                 "menuType": {
                   "example": "any"
                 },
@@ -414,9 +417,6 @@
                   "example": "any"
                 },
                 "menuWith": {
-                  "example": "any"
-                },
-                "menuName": {
                   "example": "any"
                 },
                 "menuLikeCnt": {

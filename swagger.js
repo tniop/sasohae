@@ -5,8 +5,8 @@ const doc = {
     title: "sasohae",
     description: "Description",
   },
-  host: "localhost:3000",
-  schemes: ["http"],
+  host: "tniop.shop",
+  schemes: ["https"],
 };
 
 const outputFile = "./swagger-output.json";

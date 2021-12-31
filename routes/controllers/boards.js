@@ -25,14 +25,16 @@ async function getSelectedBoards(req, res) {
             const selectedBoards = await boards
                 .find({})
                 .limit(10)
-                .skip(startNumber);
+                .skip(startNumber)
+                .sort({ _id: -1 });
             res.status(200).send(selectedBoards);
             return;
         }
         const selectedBoards = await boards
             .find({})
             .limit(10)
-            .skip(startNumber);
+            .skip(startNumber)
+            .sort({ _id: -1 });
         res.status(200).send(selectedBoards);
     } catch (err) {
         console.log(err);

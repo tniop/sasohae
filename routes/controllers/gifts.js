@@ -5,15 +5,18 @@ const giftUserData = require("../../models/giftUserData");
 // 선물추천 옵션 받기(설문) 
 async function getGiftQuestion(req, res) {
     try {
-        const giftQuestionPersonality = await giftQuestions.find({
-            giftQuestionType: "personality",
-        });
-        const giftQuestionEmotional = await giftQuestions.find({
-            giftQuestionType: "emotional",
-        });
-        const giftQuestionTrendy = await giftQuestions.find({
-            giftQuestionType: "trendy",
-        });
+        const giftQuestionPersonality = await giftQuestions.find(
+            { giftQuestionType: "personality" },
+            { _id: false, giftQuestion: true, giftQuestion_id: true }
+        );
+        const giftQuestionEmotional = await giftQuestions.find(
+            { giftQuestionType: "emotional" },
+            { _id: false, giftQuestion: true, giftQuestion_id: true }
+        );
+        const giftQuestionTrendy = await giftQuestions.find(
+            { giftQuestionType: "trendy" },
+            { _id: false, giftQuestion: true, giftQuestion_id: true }
+        );
         
         res.status(200).send({
             success: true,
@@ -65,13 +68,34 @@ async function addGiftResult(req, res) {
             const surveyGifts = await gifts.find({
                     giftEvent: { $elemMatch: { $in: [ "9" ] } },
             }, {
-                _id: false, giftTarget: false, giftEvent: false, sex: false, age: false,
-                giftAnswerExpensive: false, giftAnswerPersonality: false, giftAnswerEmotional: false, giftAnswerTrendy: false,
-                giftResultCnt: false
+                _id: false, giftName: true, giftUrl: true, giftLikeCnt: true, gift_id: true
             });
+
+            // selectedGift_id 찾아서 보냄
+            const giftAnswerP = giftAnswerPersonality[1];
+            const giftAnswerE = giftAnswerEmotional[1];
+            const giftAnswerT = giftAnswerTrendy[1];
+
+            const getSelectedGift_id = await giftUserData.find({
+                $and: [{
+                    giftTarget: { $in: [giftTarget] },
+                    giftEvent: { $in: [giftEvent] },
+                    sex: { $in: [sex] },
+                    age: { $in: [age] },
+                    giftAnswerExpensive: { $in: [giftAnswerExpensive] },
+                    giftAnswerPersonality: { $elemMatch: { $in: [giftAnswerP] } },
+                    giftAnswerEmotional: { $elemMatch: { $in: [giftAnswerE] } },
+                    giftAnswerTrendy: { $elemMatch: { $in: [giftAnswerT] } },
+                }],
+            }, {
+                selectedGift_id: true, _id: false
+            }).limit(1).sort({ $natural: -1 });
+
+            const selectedGift_id = getSelectedGift_id[0].selectedGift_id;
+
             res.status(200).send({
                 success: true,
-                selectedGift_id: null,
+                selectedGift_id: selectedGift_id,
                 surveyGifts,
             });
 
@@ -84,8 +108,6 @@ async function addGiftResult(req, res) {
             const giftAnswerT = giftAnswerTrendy[1];
 
             const surveyGifts = await gifts.find({
-                    // giftTarget: { $elemMatch: { $in: [giftTarget] } } 배열 내부 값 비교 가능
-                    //  $or: [{ giftTarget: { $elemMatch: { $in: [all, giftTarget] } } }], 
                 $and: [{
                     giftTarget: { $elemMatch: { $in: [all, giftTarget] } }, 
                     giftEvent: { $elemMatch: { $in: [all, giftEvent] } }, 
@@ -96,16 +118,31 @@ async function addGiftResult(req, res) {
                     giftAnswerEmotional: { $in: [all, giftAnswerE] },
                     giftAnswerTrendy: { $in: [all, giftAnswerT] },
                 }],
-
             }, {
-                _id: false, giftTarget: false, giftEvent: false, sex: false, age: false,
-                giftAnswerExpensive: false, giftAnswerPersonality: false, giftAnswerEmotional: false, giftAnswerTrendy: false,
-                giftResultCnt: false
+                _id: false, giftName: true, giftUrl: true, giftLikeCnt: true, gift_id: true
             });
+
+            // selectedGift_id 찾아서 보냄
+            const getSelectedGift_id = await giftUserData.find({              
+                $and: [{
+                    giftTarget: { $in: [giftTarget] },
+                    giftEvent: { $in: [giftEvent] },
+                    sex: { $in: [sex] },
+                    age: { $in: [age] },
+                    giftAnswerExpensive: { $in: [giftAnswerExpensive] },
+                    giftAnswerPersonality: { $elemMatch: { $in: [giftAnswerP] } },
+                    giftAnswerEmotional: { $elemMatch: { $in: [giftAnswerE] } },
+                    giftAnswerTrendy: { $elemMatch: { $in: [giftAnswerT] } },
+                }],
+                }, {
+                selectedGift_id: true, _id: false
+            }).limit(1).sort({ $natural: -1 });
+
+            const selectedGift_id = getSelectedGift_id[0].selectedGift_id;
 
             res.status(200).send({
                 success: true,
-                selectedGift_id: null,
+                selectedGift_id: selectedGift_id,
                 surveyGifts,
             });
         }
@@ -154,9 +191,7 @@ async function getRandomGift(req, res) {
         const randomGifts = await gifts.find({
             },
             {
-                _id: false, giftTarget: false, giftEvent: false, sex: false, age: false,
-                giftAnswerExpensive: false, giftAnswerPersonality: false, giftAnswerEmotional: false, giftAnswerTrendy: false,
-                giftResultCnt: false
+                _id: false, giftName: true, giftUrl: true, giftLikeCnt: true, gift_id: true
         });
 
         res.status(200).send({ success: true, randomGifts });
