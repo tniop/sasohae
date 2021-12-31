@@ -37,7 +37,6 @@ async function addGiftResult(req, res) {
     try {
         // 참고: selectedGift는 null로 들어가고, 좋아요 피드백을 받으면 해당 선물 이름으로 update됨
         const {
-            selectedGift,
             giftTarget,
             giftEvent,
             sex,
