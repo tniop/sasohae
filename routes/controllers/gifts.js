@@ -72,6 +72,10 @@ async function addGiftResult(req, res) {
             });
 
             // selectedGift_id 찾아서 보냄
+            const giftAnswerP = giftAnswerPersonality[1];
+            const giftAnswerE = giftAnswerEmotional[1];
+            const giftAnswerT = giftAnswerTrendy[1];
+
             const getSelectedGift_id = await giftUserData.find({
                 $and: [{
                     giftTarget: { $in: [giftTarget] },
