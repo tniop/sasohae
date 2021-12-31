@@ -26,44 +26,6 @@
         }
       }
     },
-    "/api/comments": {
-      "put": {
-        "tags": [],
-        "description": "",
-        "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      },
-      "post": {
-        "tags": [],
-        "description": "",
-        "parameters": [
-          {
-            "name": "obj",
-            "in": "body",
-            "schema": {
-              "type": "object",
-              "properties": {
-                "comment": {
-                  "example": "any"
-                }
-              }
-            }
-          }
-        ],
-        "responses": {
-          "201": {
-            "description": "Created"
-          },
-          "400": {
-            "description": "Bad Request"
-          }
-        }
-      }
-    },
     "/api/money": {
       "put": {
         "tags": [],
@@ -110,9 +72,6 @@
             "schema": {
               "type": "object",
               "properties": {
-                "selectedGift": {
-                  "example": "any"
-                },
                 "giftTarget": {
                   "example": "any"
                 },
@@ -248,15 +207,45 @@
         }
       }
     },
-    "/api/comments/{commentIdx}": {
+    "/api/comments": {
+      "post": {
+        "tags": [],
+        "description": "",
+        "parameters": [
+          {
+            "name": "obj",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "comment": {
+                  "example": "any"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      },
       "get": {
         "tags": [],
         "description": "",
         "parameters": [
           {
+            "name": "visited",
+            "in": "query",
+            "type": "string"
+          },
+          {
             "name": "commentIdx",
-            "in": "path",
-            "required": true,
+            "in": "query",
             "type": "string"
           }
         ],
