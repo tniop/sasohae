@@ -49,7 +49,6 @@ async function addGiftResult(req, res) {
 
         // giftUserData 컬렉션의 선물추천 데이터 수집용 답변 저장
         await giftUserData.create({
-            selectedGift,
             giftTarget,
             giftEvent,
             sex,
