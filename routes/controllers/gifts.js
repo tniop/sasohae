@@ -183,6 +183,21 @@ async function reviseGiftFeedback(req, res) {
     }
 }
 
+// 선물추천 giftRecommendCnt 반영 
+async function giftRecommend(req, res) {
+    try {
+        const { selectedGift } = req.body;
+        const { giftRecommendCnt } = await gifts.findOne({ giftName: selectedGift });
+        await gifts.updateOne(
+            { giftName: selectedGift },
+            { $set: { giftRecommendCnt: giftRecommendCnt + 1 } }
+        );
+        res.status(200).send();
+    } catch (err) {
+        console.log("Error : " + err);
+    }
+}
+
 // 선물추천 랜덤 
 async function getRandomGift(req, res) {
     try {
@@ -202,5 +217,6 @@ module.exports = {
     getGiftQuestion,
     addGiftResult,
     reviseGiftFeedback,
+    giftRecommend,
     getRandomGift,
 };

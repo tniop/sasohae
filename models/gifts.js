@@ -42,6 +42,10 @@ const gifts = new mongoose.Schema({
     giftAnswerTrendy: {
         type: String,
     },
+    giftRecommendCnt: {
+        type: Number,
+        default: 0,
+    },
     giftLikeCnt: {
         type: Number,
         default: 0,
