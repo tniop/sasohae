@@ -31,6 +31,10 @@ const menus = new mongoose.Schema({
         required: true,
         default: [],
     },
+    menuRecommendCnt: {
+        type: Number,
+        default: 0,
+    },
     menuLikeCnt: {
         type: Number,
         required: true,
