@@ -2,11 +2,13 @@ const menus = require("../../models/menus");
 
 async function getMenu(req, res) {
     try {
+        const all = "*"; // 전체 항목
+
         const { menuType, menuStyle, menuWith } = req.body;
         const menuList = await menus.find({
-            menuType: menuType,
+            menuType: { $elemMatch: { $in: [all, menuType] } }, 
             menuStyle: menuStyle,
-            menuWith: menuWith,
+            menuWith: { $elemMatch: { $in: [all, menuWith] } }, 
         }, {
             _id: false,
             menuType: false,
