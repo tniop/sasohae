@@ -49,7 +49,7 @@ router.get("/gifts/random", useRandomGift, getRandomGift);
 router.get("/money", getMoneyQuestion);
 router.get("/money/:menuQuestion", moneyQuestionAnswer);
 
-router.get("/menu", getMenu);
+router.post("/menu", getMenu);
 router.put("/menu", useMenu, likeMenu);
 
 router.post("/comments", writeBoard, createBoard);
