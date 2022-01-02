@@ -11,9 +11,7 @@ async function getMoneyQuestion(req, res) {
 
 async function moneyQuestionAnswer(req, res) {
     try {
-        const tempMoneyQuestion_id = req.params;
-        const moneyQuestion_id = Number(tempMoneyQuestion_id.menuQuestion)
-        const { answer } = req.body;
+        const { moneyQuestion_id, answer } = req.body;
         console.log("money id : "+moneyQuestion_id)
         console.log("answer : "+answer)
 

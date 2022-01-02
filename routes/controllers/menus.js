@@ -5,6 +5,7 @@ async function getMenu(req, res) {
         const all = "*"; // 전체 항목
 
         const { menuType, menuStyle, menuWith } = req.body;
+        let tempMenuList = [];
 
         if(menuStyle === all) {
             const menuList = await menus.find({
@@ -19,7 +20,12 @@ async function getMenu(req, res) {
                 menu_id: false,
                 __v: false
             });
-            res.status(200).send(menuList);
+            menuList.sort(() => Math.random() - Math.random());
+            tempMenuList.push(menuList[Object.keys(menuList)[0]]);
+            tempMenuList.push(menuList[Object.keys(menuList)[1]]);
+            tempMenuList.push(menuList[Object.keys(menuList)[2]]);
+            
+            res.status(200).send(tempMenuList);
         } else {
             const menuList = await menus.find({
                 menuType: { $elemMatch: { $in: [all, menuType] } }, 
@@ -34,7 +40,12 @@ async function getMenu(req, res) {
                 menu_id: false,
                 __v: false
             });
-            res.status(200).send(menuList);
+            menuList.sort(() => Math.random() - Math.random());
+            tempMenuList.push(menuList[Object.keys(menuList)[0]]);
+            tempMenuList.push(menuList[Object.keys(menuList)[1]]);
+            tempMenuList.push(menuList[Object.keys(menuList)[2]]);
+            
+            res.status(200).send(tempMenuList);
         }
     } catch (err) {
         console.log("Error : " + err);
