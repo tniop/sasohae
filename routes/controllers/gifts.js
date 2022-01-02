@@ -35,7 +35,6 @@ async function getGiftQuestion(req, res) {
 // 선물추천(결과)
 async function addGiftResult(req, res) {
     try {
-        // 참고: selectedGift는 null로 들어가고, 좋아요 피드백을 받으면 해당 선물 이름으로 update됨
         const {
             giftTarget,
             giftEvent,
@@ -46,6 +45,11 @@ async function addGiftResult(req, res) {
             giftAnswerEmotional,
             giftAnswerTrendy,
         } = req.body;
+
+        const giftAnswerP = giftAnswerPersonality[1];
+        const giftAnswerE = giftAnswerEmotional[1];
+        const giftAnswerT = giftAnswerTrendy[1];
+        let surveyGifts = [];
 
         // giftUserData 컬렉션의 선물추천 데이터 수집용 답변 저장
         await giftUserData.create({
@@ -63,17 +67,18 @@ async function addGiftResult(req, res) {
         // 하찮은 선물인 경우
         if (giftTarget === "8" || giftEvent === "9") {
 
-            const surveyGifts = await gifts.find({
+            const tempGiftList = await gifts.find({
                     giftEvent: { $elemMatch: { $in: [ "9" ] } },
             }, {
                 _id: false, giftName: true, giftUrl: true, giftLikeCnt: true, gift_id: true
             });
 
-            // selectedGift_id 찾아서 보냄
-            const giftAnswerP = giftAnswerPersonality[1];
-            const giftAnswerE = giftAnswerEmotional[1];
-            const giftAnswerT = giftAnswerTrendy[1];
+            tempGiftList.sort(() => Math.random() - Math.random());
+            surveyGifts.push(tempGiftList[Object.keys(tempGiftList)[0]]);
+            surveyGifts.push(tempGiftList[Object.keys(tempGiftList)[1]]);
+            surveyGifts.push(tempGiftList[Object.keys(tempGiftList)[2]]);
 
+            // selectedGift_id 찾아서 보냄
             const getSelectedGift_id = await giftUserData.find({
                 $and: [{
                     giftTarget: { $in: [giftTarget] },
@@ -101,11 +106,7 @@ async function addGiftResult(req, res) {
         } else {
             const all = "*"; // 전체 항목
 
-            const giftAnswerP = giftAnswerPersonality[1];
-            const giftAnswerE = giftAnswerEmotional[1];
-            const giftAnswerT = giftAnswerTrendy[1];
-
-            const surveyGifts = await gifts.find({
+            const tempGiftList = await gifts.find({
                 $and: [{
                     giftTarget: { $elemMatch: { $in: [all, giftTarget] } }, 
                     giftEvent: { $elemMatch: { $in: [all, giftEvent] } }, 
@@ -119,6 +120,11 @@ async function addGiftResult(req, res) {
             }, {
                 _id: false, giftName: true, giftUrl: true, giftLikeCnt: true, gift_id: true
             });
+
+            tempGiftList.sort(() => Math.random() - Math.random());
+            surveyGifts.push(tempGiftList[Object.keys(tempGiftList)[0]]);
+            surveyGifts.push(tempGiftList[Object.keys(tempGiftList)[1]]);
+            surveyGifts.push(tempGiftList[Object.keys(tempGiftList)[2]]);
 
             // selectedGift_id 찾아서 보냄
             const getSelectedGift_id = await giftUserData.find({              
@@ -155,9 +161,9 @@ async function addGiftResult(req, res) {
 // 선물추천 Like 반영 
 async function reviseGiftFeedback(req, res) {
     try {
-        // giftUserData 테이블에 Like 반영
+        // giftUserData 테이블에 like한 선물 이름 반영
         const { selectedGift_id, selectedGift } = req.body;
-        // console.log(selectedGift_id, selectedGift); // body에서 전달 받는 데이터 selectedGift_id: 2, selectedGift: "지갑"
+
         await giftUserData.updateOne(
             { selectedGift_id },
             { $set: { selectedGift: selectedGift } }
@@ -201,11 +207,10 @@ async function giftRecommend(req, res) {
 // 선물추천 랜덤 
 async function getRandomGift(req, res) {
     try {
-        const randomGifts = await gifts.find({
-            },
-            {
-                _id: false, giftName: true, giftUrl: true, giftLikeCnt: true, gift_id: true
-        });
+        const randomGifts = await gifts.aggregate([
+            { $sample: { size: 3 } },
+            { $project: { _id: false, giftName: true, giftUrl: true, giftLikeCnt: true, gift_id: true } },
+        ]);
 
         res.status(200).send({ success: true, randomGifts });
     } catch (err) {
