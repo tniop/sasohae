@@ -23,7 +23,7 @@ async function getSelectedBoards(req, res) {
         const startNumber = Number(board_id);
         const selectedBoards = await boards
             .find({})
-            .limit(10)
+            .limit(20)
             .skip(startNumber)
             .sort({ _id: -1 });
         res.status(200).send(selectedBoards);
