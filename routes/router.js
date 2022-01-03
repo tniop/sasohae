@@ -22,7 +22,10 @@ const {
     createGiftQuestions,
 } = require("./controllers/admin");
 const imgUpload = require("./controllers/imgUpload");
-const getTopRankedGifts = require("./controllers/ranking");
+const {
+    getTopRankedGifts,
+    getTopRankedMenus,
+} = require("./controllers/ranking");
 /* ==================================================*/
 
 /* ==================== middleware ====================*/
@@ -56,6 +59,7 @@ router.get("/money/:menuQuestion", moneyQuestionAnswer);
 router.post("/menu", getMenu);
 router.put("/menu", useMenu, likeMenu);
 router.put("/menu/recommend", recommendMenu);
+router.get("/menu/ranking", getTopRankedMenus);
 
 router.post("/comments", writeBoard, createBoard);
 router.get("/comments", userVisitBoard, getSelectedBoards);
