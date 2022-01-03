@@ -37,11 +37,11 @@ const menus = new mongoose.Schema({
     },
     menuLikeCnt: {
         type: Number,
-        required: true,
+        default: 0,
     },
     menuResultCnt: {
         type: Number,
-        required: true,
+        default: 0,
     },
 });
 

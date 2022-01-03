@@ -88,8 +88,6 @@ async function createMenu(req, res) {
             menuType,
             menuStyle,
             menuWith,
-            menuLikeCnt,
-            menuResultCnt,
         } = req.body;
         await menus.create({
             menuName,
@@ -97,8 +95,6 @@ async function createMenu(req, res) {
             menuType,
             menuStyle,
             menuWith,
-            menuLikeCnt,
-            menuResultCnt,
         });
         res.status(201).send();
     } catch (err) {
