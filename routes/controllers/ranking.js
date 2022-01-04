@@ -1,7 +1,10 @@
 const gifts = require("../../models/gifts");
 const menus = require("../../models/menus");
 const rankings = require("../../models/rankings");
-
+const {
+    updateGiftRanking,
+    updateMenuRanking,
+} = require("../../functions/rankingUpdate");
 // const cron = require("node-cron");
 
 // cron.schedule("0 */2 * * * *", updateGiftRanking);
@@ -23,8 +26,12 @@ async function getTopRankedGifts(req, res) {
                 tempRankingArr[i] = {};
                 const rank = i + 1;
                 const title = top10Ranked[i].giftName;
+                const imgUrl = top10Ranked[i].giftUrl;
+                const likeCnt = top10Ranked[i].giftLikeCnt;
                 tempRankingArr[i].rank = rank;
                 tempRankingArr[i].title = title;
+                tempRankingArr[i].imgUrl = imgUrl;
+                tempRankingArr[i].likeCnt = likeCnt;
                 tempRankingArr[i].variance = "New";
             }
 
@@ -41,8 +48,12 @@ async function getTopRankedGifts(req, res) {
                 tempRankingArr[i] = {};
                 const rank = i + 1;
                 const title = top10Ranked[i].giftName;
+                const imgUrl = top10Ranked[i].giftUrl;
+                const likeCnt = top10Ranked[i].giftLikeCnt;
                 tempRankingArr[i].rank = rank;
                 tempRankingArr[i].title = title;
+                tempRankingArr[i].imgUrl = imgUrl;
+                tempRankingArr[i].likeCnt = likeCnt;
                 tempRankingArr[i].variance = "New";
                 for (let k = 0; k < pastRankingInDB.length; k++) {
                     if (tempRankingArr[i].title == pastRankingInDB[k].title) {
@@ -84,8 +95,12 @@ async function getTopRankedMenus(req, res) {
                 tempRankingArr[i] = {};
                 const rank = i + 1;
                 const title = top10Ranked[i].menuName;
+                const imgUrl = top10Ranked[i].menuUrl;
+                const likeCnt = top10Ranked[i].menuLikeCnt;
                 tempRankingArr[i].rank = rank;
                 tempRankingArr[i].title = title;
+                tempRankingArr[i].imgUrl = imgUrl;
+                tempRankingArr[i].likeCnt = likeCnt;
                 tempRankingArr[i].variance = "New";
             }
 
@@ -102,8 +117,12 @@ async function getTopRankedMenus(req, res) {
                 tempRankingArr[i] = {};
                 const rank = i + 1;
                 const title = top10Ranked[i].menuName;
+                const imgUrl = top10Ranked[i].menuUrl;
+                const likeCnt = top10Ranked[i].menuLikeCnt;
                 tempRankingArr[i].rank = rank;
                 tempRankingArr[i].title = title;
+                tempRankingArr[i].imgUrl = imgUrl;
+                tempRankingArr[i].likeCnt = likeCnt;
                 tempRankingArr[i].variance = "New";
                 for (let k = 0; k < pastRankingInDB.length; k++) {
                     if (tempRankingArr[i].title == pastRankingInDB[k].title) {
