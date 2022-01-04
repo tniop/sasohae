@@ -1,7 +1,7 @@
 const statistics = require("../models/statistics");
 
 // 사이트 방문자 집계함수
-async function userVisit(req, res) {
+async function userVisit(req, res, next) {
     try {
         const statisticExist = await statistics.findOne({ statistic_id: 1 });
         if (!statisticExist) {
@@ -12,7 +12,7 @@ async function userVisit(req, res) {
             { statistic_id: 1 },
             { $set: { totVisitorCnt: totVisitorCnt + 1 } }
         );
-        res.status(200).send();
+        next();
     } catch (err) {
         console.log("Error : " + err);
     }
