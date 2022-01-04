@@ -3,8 +3,8 @@ const menus = require("../models/menus");
 const rankings = require("../models/rankings");
 const cron = require("node-cron");
 
-cron.schedule("0 */3 * * * *", updateGiftRanking);
-cron.schedule("0 */3 * * * *", updateMenuRanking);
+cron.schedule("*/15 * * * *", updateGiftRanking);
+cron.schedule("*/15 * * * *", updateMenuRanking);
 
 // 선물 랭킹을 생성하는 함수
 async function createGiftRanking() {
@@ -116,10 +116,11 @@ async function createMenuRanking() {
 
 // 선물 랭킹 업데이트를 위한 함수
 async function updateGiftRanking() {
-    const tempRankingArr = await giftRanking();
+    const tempRankingArr = await createGiftRanking();
     const rankingDB = await rankings.findOne({ ranking_Id: 1 });
     const currentRankinginDB = rankingDB.currentRanking;
 
+    console.log(currentRankinginDB);
     await rankings.updateOne(
         { ranking_Id: 1 },
         { $set: { pastRanking: currentRankinginDB } }
@@ -132,10 +133,11 @@ async function updateGiftRanking() {
 
 // 메뉴 랭킹 업데이트를 위한 함수
 async function updateMenuRanking() {
-    const tempRankingArr = await menuRanking();
+    const tempRankingArr = await createMenuRanking();
     const rankingDB = await rankings.findOne({ ranking_Id: 2 });
     const currentRankinginDB = rankingDB.currentRanking;
 
+    console.log(currentRankinginDB);
     await rankings.updateOne(
         { ranking_Id: 2 },
         { $set: { pastRanking: currentRankinginDB } }
@@ -146,4 +148,9 @@ async function updateMenuRanking() {
     );
 }
 
-module.exports = { createGiftRanking, createMenuRanking };
+module.exports = {
+    createGiftRanking,
+    createMenuRanking,
+    updateGiftRanking,
+    updateMenuRanking,
+};
