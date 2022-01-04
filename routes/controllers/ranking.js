@@ -23,7 +23,6 @@ async function getTopRankedGifts(req, res) {
                 tempRankingArr[i] = {};
                 const rank = i + 1;
                 const title = top10Ranked[i].giftName;
-                currentRankingSet.add(title);
                 tempRankingArr[i].rank = rank;
                 tempRankingArr[i].title = title;
                 tempRankingArr[i].variance = "New";
