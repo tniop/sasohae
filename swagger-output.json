@@ -189,6 +189,21 @@
         }
       }
     },
+    "/api/gifts/options": {
+      "get": {
+        "tags": [],
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/api/money/{menuQuestion}": {
       "get": {
         "tags": [],
