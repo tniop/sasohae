@@ -19,11 +19,7 @@
         "tags": [],
         "description": "",
         "parameters": [],
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
+        "responses": {}
       }
     },
     "/api/money": {
@@ -204,6 +200,36 @@
         }
       }
     },
+    "/api/gifts/ranking": {
+      "get": {
+        "tags": [],
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
+    "/api/gifts/options": {
+      "get": {
+        "tags": [],
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          }
+        }
+      }
+    },
     "/api/menu": {
       "post": {
         "tags": [],
@@ -279,6 +305,21 @@
         "responses": {
           "200": {
             "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/menu/ranking": {
+      "get": {
+        "tags": [],
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
           }
         }
       }
@@ -482,12 +523,6 @@
                   "example": "any"
                 },
                 "menuWith": {
-                  "example": "any"
-                },
-                "menuLikeCnt": {
-                  "example": "any"
-                },
-                "menuResultCnt": {
                   "example": "any"
                 }
               }

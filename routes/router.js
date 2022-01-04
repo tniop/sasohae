@@ -52,9 +52,10 @@ router.put("/gifts/like", reviseGiftFeedback);
 router.put("/gifts/recommend", giftRecommend);
 router.get("/gifts/random", useRandomGift, getRandomGift);
 router.get("/gifts/ranking", getTopRankedGifts);
+router.get("/gifts/options", getTopRankedGifts);
 
 router.get("/money", getMoneyQuestion);
-router.get("/money/:menuQuestion", moneyQuestionAnswer);
+router.post("/money", moneyQuestionAnswer);
 
 router.post("/menu", getMenu);
 router.put("/menu", useMenu, likeMenu);
