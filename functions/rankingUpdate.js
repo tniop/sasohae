@@ -1,8 +1,13 @@
 const gifts = require("../models/gifts");
 const menus = require("../models/menus");
 const rankings = require("../models/rankings");
+const cron = require("node-cron");
 
-async function updateGiftRanking() {
+cron.schedule("0 */3 * * * *", updateGiftRanking);
+cron.schedule("0 */3 * * * *", updateMenuRanking);
+
+// 선물 랭킹을 생성하는 함수
+async function createGiftRanking() {
     const top10Ranked = await gifts
         .find({})
         .limit(10)
@@ -17,9 +22,12 @@ async function updateGiftRanking() {
             tempRankingArr[i] = {};
             const rank = i + 1;
             const title = top10Ranked[i].giftName;
-            currentRankingSet.add(title);
+            const imgUrl = top10Ranked[i].giftUrl;
+            const likeCnt = top10Ranked[i].giftLikeCnt;
             tempRankingArr[i].rank = rank;
             tempRankingArr[i].title = title;
+            tempRankingArr[i].imgUrl = imgUrl;
+            tempRankingArr[i].likeCnt = likeCnt;
             tempRankingArr[i].variance = "New";
         }
 
@@ -29,17 +37,18 @@ async function updateGiftRanking() {
         });
     } else {
         const pastRankingInDB = rankingDB.pastRanking;
-        const currentRankinginDB = rankingDB.currentRanking;
 
         for (let i = 0; i < top10Ranked.length; i++) {
-            //현재 랭킹 생성;
             tempRankingArr[i] = {};
             const rank = i + 1;
             const title = top10Ranked[i].giftName;
+            const imgUrl = top10Ranked[i].giftUrl;
+            const likeCnt = top10Ranked[i].giftLikeCnt;
             tempRankingArr[i].rank = rank;
             tempRankingArr[i].title = title;
+            tempRankingArr[i].imgUrl = imgUrl;
+            tempRankingArr[i].likeCnt = likeCnt;
             tempRankingArr[i].variance = "New";
-            console.log(pastRankingInDB[i].title, tempRankingArr[i].title);
             for (let k = 0; k < pastRankingInDB.length; k++) {
                 if (tempRankingArr[i].title == pastRankingInDB[k].title) {
                     tempRankingArr[i].variance =
@@ -47,19 +56,12 @@ async function updateGiftRanking() {
                 }
             }
         }
-
-        await rankings.updateOne(
-            { ranking_Id: 1 },
-            { $set: { pastRanking: currentRankinginDB } }
-        );
-        await rankings.updateOne(
-            { ranking_Id: 1 },
-            { $set: { currentRanking: tempRankingArr } }
-        );
     }
+    return tempRankingArr;
 }
 
-async function updateMenuRanking() {
+// 메뉴 랭킹을 생성하는 함수
+async function createMenuRanking() {
     const top10Ranked = await menus
         .find({})
         .limit(10)
@@ -74,8 +76,12 @@ async function updateMenuRanking() {
             tempRankingArr[i] = {};
             const rank = i + 1;
             const title = top10Ranked[i].menuName;
+            const imgUrl = top10Ranked[i].menuUrl;
+            const likeCnt = top10Ranked[i].menuLikeCnt;
             tempRankingArr[i].rank = rank;
             tempRankingArr[i].title = title;
+            tempRankingArr[i].imgUrl = imgUrl;
+            tempRankingArr[i].likeCnt = likeCnt;
             tempRankingArr[i].variance = "New";
         }
 
@@ -85,17 +91,18 @@ async function updateMenuRanking() {
         });
     } else {
         const pastRankingInDB = rankingDB.pastRanking;
-        const currentRankinginDB = rankingDB.currentRanking;
 
         for (let i = 0; i < top10Ranked.length; i++) {
-            //현재 랭킹 생성;
             tempRankingArr[i] = {};
             const rank = i + 1;
             const title = top10Ranked[i].menuName;
+            const imgUrl = top10Ranked[i].menuUrl;
+            const likeCnt = top10Ranked[i].menuLikeCnt;
             tempRankingArr[i].rank = rank;
             tempRankingArr[i].title = title;
+            tempRankingArr[i].imgUrl = imgUrl;
+            tempRankingArr[i].likeCnt = likeCnt;
             tempRankingArr[i].variance = "New";
-            console.log(pastRankingInDB[i].title, tempRankingArr[i].title);
             for (let k = 0; k < pastRankingInDB.length; k++) {
                 if (tempRankingArr[i].title == pastRankingInDB[k].title) {
                     tempRankingArr[i].variance =
@@ -103,16 +110,40 @@ async function updateMenuRanking() {
                 }
             }
         }
-
-        await rankings.updateOne(
-            { ranking_Id: 2 },
-            { $set: { pastRanking: currentRankinginDB } }
-        );
-        await rankings.updateOne(
-            { ranking_Id: 2 },
-            { $set: { currentRanking: tempRankingArr } }
-        );
     }
+    return tempRankingArr;
 }
 
-module.exports = { updateGiftRanking, updateMenuRanking };
+// 선물 랭킹 업데이트를 위한 함수
+async function updateGiftRanking() {
+    const tempRankingArr = await giftRanking();
+    const rankingDB = await rankings.findOne({ ranking_Id: 1 });
+    const currentRankinginDB = rankingDB.currentRanking;
+
+    await rankings.updateOne(
+        { ranking_Id: 1 },
+        { $set: { pastRanking: currentRankinginDB } }
+    );
+    await rankings.updateOne(
+        { ranking_Id: 1 },
+        { $set: { currentRanking: tempRankingArr } }
+    );
+}
+
+// 메뉴 랭킹 업데이트를 위한 함수
+async function updateMenuRanking() {
+    const tempRankingArr = await menuRanking();
+    const rankingDB = await rankings.findOne({ ranking_Id: 2 });
+    const currentRankinginDB = rankingDB.currentRanking;
+
+    await rankings.updateOne(
+        { ranking_Id: 2 },
+        { $set: { pastRanking: currentRankinginDB } }
+    );
+    await rankings.updateOne(
+        { ranking_Id: 2 },
+        { $set: { currentRanking: tempRankingArr } }
+    );
+}
+
+module.exports = { createGiftRanking, createMenuRanking };
