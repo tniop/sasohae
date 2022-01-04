@@ -1,17 +1,12 @@
 const {
-    updateGiftRanking,
-    updateMenuRanking,
+    createGiftRanking,
+    createMenuRanking,
 } = require("../../functions/rankingUpdate");
-
-// const cron = require("node-cron");
-
-// cron.schedule("0 */2 * * * *", updateGiftRanking);
-// cron.schedule("0 */2 * * * *", updateMenuRanking);
 
 async function getTopRankedGifts(req, res) {
     try {
-        updateGiftRanking();
-        res.status(200).send(tempRankingArr);
+        const result = await createGiftRanking();
+        res.status(200).send(result);
     } catch (err) {
         console.log(err);
         res.status(400);
@@ -20,8 +15,8 @@ async function getTopRankedGifts(req, res) {
 
 async function getTopRankedMenus(req, res) {
     try {
-        updateMenuRanking();
-        res.status(200).send(tempRankingArr);
+        const result = await createMenuRanking();
+        res.status(200).send(result);
     } catch (err) {
         console.log(err);
         res.status(400);

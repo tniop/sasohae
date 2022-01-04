@@ -26,6 +26,7 @@ const {
     getTopRankedGifts,
     getTopRankedMenus,
 } = require("./controllers/ranking");
+const createAccessTime = require("./controllers/userAccessTime");
 /* ==================================================*/
 
 /* ==================== middleware ====================*/
@@ -42,7 +43,7 @@ const {
 /* ==================================================*/
 
 /* ==================== router ====================*/
-router.put("/main", userVisit);
+router.put("/main", userVisit, createAccessTime);
 router.put("/money", useMoney);
 // router.put("/comments", userVisitBoard);
 
@@ -55,7 +56,7 @@ router.get("/gifts/ranking", getTopRankedGifts);
 router.get("/gifts/options", getTopRankedGifts);
 
 router.get("/money", getMoneyQuestion);
-router.get("/money/:menuQuestion", moneyQuestionAnswer);
+router.post("/money", moneyQuestionAnswer);
 
 router.post("/menu", getMenu);
 router.put("/menu", useMenu, likeMenu);
