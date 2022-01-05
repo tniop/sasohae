@@ -1,9 +1,9 @@
-// const {
-//     getMenu,
-//     likeMenu,
-//     recommendMenu,
-// } = require("../controllers/menus");
-// const menus = require("../models/menus");
+const {
+    getMenu,
+    likeMenu,
+    recommendMenu,
+} = require("../controllers/menus");
+const menus = require("../models/menus");
 
 // const req = {
 //     body: { menuType: "1", menuStyle: "1", menuWith: "2" },
