@@ -1,6 +1,6 @@
-const gifts = require("../../models/gifts");
-const giftQuestions = require("../../models/giftQuestions");
-const giftUserData = require("../../models/giftUserData");
+const gifts = require("../models/gifts");
+const giftQuestions = require("../models/giftQuestions");
+const giftUserData = require("../models/giftUserData");
 
 // 선물추천 옵션 받기(설문) 
 async function getGiftQuestion(req, res) {
