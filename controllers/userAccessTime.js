@@ -1,4 +1,4 @@
-const userAccessTime = require("../../models/userAccessTime");
+const userAccessTime = require("../models/userAccessTime");
 
 async function createAccessTime(req, res) {
     await userAccessTime.create({});

@@ -1,7 +1,7 @@
-const gifts = require("../../models/gifts");
-const giftQuestions = require("../../models/giftQuestions");
-const MoneyQuestions = require("../../models/moneyQuestions");
-const menus = require("../../models/menus");
+const gifts = require("../models/gifts");
+const giftQuestions = require("../models/giftQuestions");
+const MoneyQuestions = require("../models/moneyQuestions");
+const menus = require("../models/menus");
 
 // 개별 선물 db 등재용 함수
 async function createGift(req, res) {
