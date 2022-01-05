@@ -1,7 +1,7 @@
 const {
     createGiftRanking,
     createMenuRanking,
-} = require("../../functions/rankingUpdate");
+} = require("../functions/rankingUpdate");
 
 async function getTopRankedGifts(req, res) {
     try {

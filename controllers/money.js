@@ -1,4 +1,4 @@
-const moneyQuestions = require("../../models/moneyQuestions");
+const moneyQuestions = require("../models/moneyQuestions");
 
 async function getMoneyQuestion(req, res) {
     try {
