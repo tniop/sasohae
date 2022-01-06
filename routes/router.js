@@ -8,24 +8,25 @@ const {
     reviseGiftFeedback,
     giftRecommend,
     getRandomGift,
-} = require("./controllers/gifts");
+} = require("../controllers/gifts");
 const {
     getMoneyQuestion,
     moneyQuestionAnswer,
-} = require("./controllers/money");
-const { getMenu, likeMenu, recommendMenu } = require("./controllers/menus");
-const { createBoard, getSelectedBoards } = require("./controllers/boards");
+} = require("../controllers/money");
+const { getMenu, likeMenu, recommendMenu } = require("../controllers/menus");
+const { createBoard, getSelectedBoards } = require("../controllers/boards");
 const {
     createMoneyQuestions,
     createMenu,
     createGift,
     createGiftQuestions,
-} = require("./controllers/admin");
-const imgUpload = require("./controllers/imgUpload");
+} = require("../controllers/admin");
+const imgUpload = require("../controllers/imgUpload");
 const {
     getTopRankedGifts,
     getTopRankedMenus,
-} = require("./controllers/ranking");
+} = require("../controllers/ranking");
+const createAccessTime = require("../controllers/userAccessTime");
 /* ==================================================*/
 
 /* ==================== middleware ====================*/
@@ -42,7 +43,7 @@ const {
 /* ==================================================*/
 
 /* ==================== router ====================*/
-router.put("/main", userVisit);
+router.put("/main", userVisit, createAccessTime);
 router.put("/money", useMoney);
 // router.put("/comments", userVisitBoard);
 

@@ -1,4 +1,4 @@
-const boards = require("../../models/boards");
+const boards = require("../models/boards");
 
 // 고민 끄나풀 작성을 위한 함수
 async function createBoard(req, res) {

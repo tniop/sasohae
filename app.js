@@ -7,6 +7,12 @@ const cors = require("cors");
 const port = 3000;
 const swaggerUi = require("swagger-ui-express");
 const swaggerFile = require("./swagger-output");
+const fs = require('fs');
+const http=require("http");
+const https=require("https");
+require("dotenv").config();
+
+app.use(express.static('public'));
 
 app.use("*", cors());
 app.use(express.json());
@@ -22,6 +28,10 @@ app.use((error, req, res, next) => {
     res.sendStatus(500);
 });
 
-app.listen(port, () => {
-    console.log(`listening at http://localhost:${port}`);
-});
+ const options = { // letsencrypt로 받은 인증서 경로를 입력
+  ca: fs.readFileSync(process.env.HTTPS_CA),
+  key: fs.readFileSync(process.env.HTTPS_KEY),
+  cert: fs.readFileSync(process.env.HTTPS_CERT)
+  };
+  http.createServer(app).listen(3000);
+  https.createServer(options, app).listen(443);
