@@ -14,7 +14,7 @@ const giftsUserData = new mongoose.Schema(
             type: Array,
             default: [],
         },
-        giftTarget: { 
+        giftTarget: {
             type: String,
         },
         giftEvent: {
@@ -41,7 +41,6 @@ const giftsUserData = new mongoose.Schema(
             type: Array,
             default: [],
         },
-
     },
     { timestamps: true }
 );

@@ -2,7 +2,7 @@ const gifts = require("../models/gifts");
 const giftQuestions = require("../models/giftQuestions");
 const giftUserData = require("../models/giftUserData");
 
-// 선물추천 옵션 받기(설문) 
+// 선물추천 옵션 받기(설문)
 async function getGiftQuestion(req, res) {
     try {
         const giftQuestionPersonality = await giftQuestions.find(
@@ -17,7 +17,7 @@ async function getGiftQuestion(req, res) {
             { giftQuestionType: "trendy" },
             { _id: false, giftQuestion: true, giftQuestion_id: true }
         );
-        
+
         res.status(200).send({
             success: true,
             giftQuestionPersonality,
@@ -66,12 +66,18 @@ async function addGiftResult(req, res) {
         /* gifts 컬렉션에서 답변에 맞는 선물 리스트 담기 */
         // 하찮은 선물인 경우
         if (giftTarget === "8" || giftEvent === "9") {
-
-            const tempGiftList = await gifts.find({
-                    giftEvent: { $elemMatch: { $in: [ "9" ] } },
-            }, {
-                _id: false, giftName: true, giftUrl: true, giftLikeCnt: true, gift_id: true
-            });
+            const tempGiftList = await gifts.find(
+                {
+                    giftEvent: { $elemMatch: { $in: ["9"] } },
+                },
+                {
+                    _id: false,
+                    giftName: true,
+                    giftUrl: true,
+                    giftLikeCnt: true,
+                    gift_id: true,
+                }
+            );
 
             tempGiftList.sort(() => Math.random() - Math.random());
             surveyGifts.push(tempGiftList[Object.keys(tempGiftList)[0]]);
@@ -79,28 +85,60 @@ async function addGiftResult(req, res) {
             surveyGifts.push(tempGiftList[Object.keys(tempGiftList)[2]]);
 
             // 하찮은 선물 카테고리의 추천된 선물 카운트 증가
-            const { giftRecommendCnt } = await gifts.updateMany(
-                {
-                    giftName: { $in: [surveyGifts[0].giftName, surveyGifts[1].giftName, surveyGifts[2].giftName] },
-                },
-                { $set: { giftRecommendCnt: giftRecommendCnt + 1 } }
+            const tempGift_0 = await gifts.findOne({
+                giftName: surveyGifts[0].giftName,
+            });
+            await gifts.updateOne(
+                { giftName: surveyGifts[0].giftName },
+                { $set: { giftRecommendCnt: tempGift_0.giftRecommendCnt + 1 } }
+            );
+            const tempGift_1 = await gifts.findOne({
+                giftName: surveyGifts[1].giftName,
+            });
+            await gifts.updateOne(
+                { giftName: surveyGifts[1].giftName },
+                { $set: { giftRecommendCnt: tempGift_1.giftRecommendCnt + 1 } }
+            );
+            const tempGift_2 = await gifts.findOne({
+                giftName: surveyGifts[2].giftName,
+            });
+            await gifts.updateOne(
+                { giftName: surveyGifts[2].giftName },
+                { $set: { giftRecommendCnt: tempGift_2.giftRecommendCnt + 1 } }
             );
 
             // selectedGift_id 찾아서 보냄
-            const getSelectedGift_id = await giftUserData.find({
-                $and: [{
-                    giftTarget: { $in: [giftTarget] },
-                    giftEvent: { $in: [giftEvent] },
-                    sex: { $in: [sex] },
-                    age: { $in: [age] },
-                    giftAnswerExpensive: { $in: [giftAnswerExpensive] },
-                    giftAnswerPersonality: { $elemMatch: { $in: [giftAnswerP] } },
-                    giftAnswerEmotional: { $elemMatch: { $in: [giftAnswerE] } },
-                    giftAnswerTrendy: { $elemMatch: { $in: [giftAnswerT] } },
-                }],
-            }, {
-                selectedGift_id: true, _id: false
-            }).limit(1).sort({ $natural: -1 });
+            const getSelectedGift_id = await giftUserData
+                .find(
+                    {
+                        $and: [
+                            {
+                                giftTarget: { $in: [giftTarget] },
+                                giftEvent: { $in: [giftEvent] },
+                                sex: { $in: [sex] },
+                                age: { $in: [age] },
+                                giftAnswerExpensive: {
+                                    $in: [giftAnswerExpensive],
+                                },
+                                giftAnswerPersonality: {
+                                    $elemMatch: { $in: [giftAnswerP] },
+                                },
+                                giftAnswerEmotional: {
+                                    $elemMatch: { $in: [giftAnswerE] },
+                                },
+                                giftAnswerTrendy: {
+                                    $elemMatch: { $in: [giftAnswerT] },
+                                },
+                            },
+                        ],
+                    },
+                    {
+                        selectedGift_id: true,
+                        _id: false,
+                    }
+                )
+                .limit(1)
+                .sort({ $natural: -1 });
 
             const selectedGift_id = getSelectedGift_id[0].selectedGift_id;
 
@@ -110,24 +148,39 @@ async function addGiftResult(req, res) {
                 surveyGifts,
             });
 
-        // 하찮은 선물이 아닌 경우
+            // 하찮은 선물이 아닌 경우
         } else {
             const all = "*"; // 전체 항목
 
-            const tempGiftList = await gifts.find({
-                $and: [{
-                    giftTarget: { $elemMatch: { $in: [all, giftTarget] } }, 
-                    giftEvent: { $elemMatch: { $in: [all, giftEvent] } }, 
-                    sex: { $in: [all, sex]  }, 
-                    age: { $elemMatch: { $in: [all, age] } }, 
-                    giftAnswerExpensive: { $in: [all, giftAnswerExpensive] },                    
-                    giftAnswerPersonality: { $in: [all, giftAnswerP] },
-                    giftAnswerEmotional: { $in: [all, giftAnswerE] },
-                    giftAnswerTrendy: { $in: [all, giftAnswerT] },
-                }],
-            }, {
-                _id: false, giftName: true, giftUrl: true, giftLikeCnt: true, gift_id: true
-            });
+            const tempGiftList = await gifts.find(
+                {
+                    $and: [
+                        {
+                            giftTarget: {
+                                $elemMatch: { $in: [all, giftTarget] },
+                            },
+                            giftEvent: {
+                                $elemMatch: { $in: [all, giftEvent] },
+                            },
+                            sex: { $in: [all, sex] },
+                            age: { $elemMatch: { $in: [all, age] } },
+                            giftAnswerExpensive: {
+                                $in: [all, giftAnswerExpensive],
+                            },
+                            giftAnswerPersonality: { $in: [all, giftAnswerP] },
+                            giftAnswerEmotional: { $in: [all, giftAnswerE] },
+                            giftAnswerTrendy: { $in: [all, giftAnswerT] },
+                        },
+                    ],
+                },
+                {
+                    _id: false,
+                    giftName: true,
+                    giftUrl: true,
+                    giftLikeCnt: true,
+                    gift_id: true,
+                }
+            );
 
             tempGiftList.sort(() => Math.random() - Math.random());
             surveyGifts.push(tempGiftList[Object.keys(tempGiftList)[0]]);
@@ -135,28 +188,60 @@ async function addGiftResult(req, res) {
             surveyGifts.push(tempGiftList[Object.keys(tempGiftList)[2]]);
 
             // 추천된 선물 카운트 증가
-            const { giftRecommendCnt }  = await gifts.updateMany(
-                {
-                    giftName: { $in: [surveyGifts[0].giftName, surveyGifts[1].giftName, surveyGifts[2].giftName] },
-                },
-                { $set: { giftRecommendCnt: giftRecommendCnt + 1  } }
+            const tempGift_0 = await gifts.findOne({
+                giftName: surveyGifts[0].giftName,
+            });
+            await gifts.updateOne(
+                { giftName: surveyGifts[0].giftName },
+                { $set: { giftRecommendCnt: tempGift_0.giftRecommendCnt + 1 } }
+            );
+            const tempGift_1 = await gifts.findOne({
+                giftName: surveyGifts[1].giftName,
+            });
+            await gifts.updateOne(
+                { giftName: surveyGifts[1].giftName },
+                { $set: { giftRecommendCnt: tempGift_1.giftRecommendCnt + 1 } }
+            );
+            const tempGift_2 = await gifts.findOne({
+                giftName: surveyGifts[2].giftName,
+            });
+            await gifts.updateOne(
+                { giftName: surveyGifts[2].giftName },
+                { $set: { giftRecommendCnt: tempGift_2.giftRecommendCnt + 1 } }
             );
 
             // selectedGift_id 찾아서 보냄
-            const getSelectedGift_id = await giftUserData.find({              
-                $and: [{
-                    giftTarget: { $in: [giftTarget] },
-                    giftEvent: { $in: [giftEvent] },
-                    sex: { $in: [sex] },
-                    age: { $in: [age] },
-                    giftAnswerExpensive: { $in: [giftAnswerExpensive] },
-                    giftAnswerPersonality: { $elemMatch: { $in: [giftAnswerP] } },
-                    giftAnswerEmotional: { $elemMatch: { $in: [giftAnswerE] } },
-                    giftAnswerTrendy: { $elemMatch: { $in: [giftAnswerT] } },
-                }],
-                }, {
-                selectedGift_id: true, _id: false
-            }).limit(1).sort({ $natural: -1 });
+            const getSelectedGift_id = await giftUserData
+                .find(
+                    {
+                        $and: [
+                            {
+                                giftTarget: { $in: [giftTarget] },
+                                giftEvent: { $in: [giftEvent] },
+                                sex: { $in: [sex] },
+                                age: { $in: [age] },
+                                giftAnswerExpensive: {
+                                    $in: [giftAnswerExpensive],
+                                },
+                                giftAnswerPersonality: {
+                                    $elemMatch: { $in: [giftAnswerP] },
+                                },
+                                giftAnswerEmotional: {
+                                    $elemMatch: { $in: [giftAnswerE] },
+                                },
+                                giftAnswerTrendy: {
+                                    $elemMatch: { $in: [giftAnswerT] },
+                                },
+                            },
+                        ],
+                    },
+                    {
+                        selectedGift_id: true,
+                        _id: false,
+                    }
+                )
+                .limit(1)
+                .sort({ $natural: -1 });
 
             const selectedGift_id = getSelectedGift_id[0].selectedGift_id;
 
@@ -174,7 +259,7 @@ async function addGiftResult(req, res) {
     }
 }
 
-// 선물추천 Like 반영 
+// 선물추천 Like 반영
 async function reviseGiftFeedback(req, res) {
     try {
         // giftUserData 테이블에 like한 선물 이름 반영
@@ -182,7 +267,7 @@ async function reviseGiftFeedback(req, res) {
 
         await giftUserData.updateOne(
             { selectedGift_id },
-            { $push: { selectedGift: selectedGift } } 
+            { $push: { selectedGift: selectedGift } }
         );
 
         // gifts 테이블에 Like 반영
@@ -209,7 +294,9 @@ async function reviseGiftFeedback(req, res) {
 async function giftRecommend(req, res) {
     try {
         const { selectedGift } = req.body;
-        const { giftRecommendCnt } = await gifts.findOne({ giftName: selectedGift });
+        const { giftRecommendCnt } = await gifts.findOne({
+            giftName: selectedGift,
+        });
         // await gifts.updateOne(
         //     { giftName: selectedGift },
         //     { $set: { giftRecommendCnt: giftRecommendCnt + 1 } }
@@ -220,12 +307,20 @@ async function giftRecommend(req, res) {
     }
 }
 
-// 선물추천 랜덤 
+// 선물추천 랜덤
 async function getRandomGift(req, res) {
     try {
         const randomGifts = await gifts.aggregate([
             { $sample: { size: 3 } },
-            { $project: { _id: false, giftName: true, giftUrl: true, giftLikeCnt: true, gift_id: true } },
+            {
+                $project: {
+                    _id: false,
+                    giftName: true,
+                    giftUrl: true,
+                    giftLikeCnt: true,
+                    gift_id: true,
+                },
+            },
         ]);
 
         res.status(200).send({ success: true, randomGifts });
