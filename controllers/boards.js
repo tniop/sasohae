@@ -1,11 +1,20 @@
 const boards = require("../models/boards");
+const fs = require("fs");
+require("dotenv").config();
 
 // 고민 끄나풀 작성을 위한 함수
 async function createBoard(req, res) {
     try {
         const { comment } = req.body;
         if (!comment) {
-            res.status(400).send("내용을 입력해주세요!");
+            res.status(400).send({
+                errorMessage: "내용을 입력해주세요!",
+            });
+            return;
+        } else if (forbiddenWordTest(comment)) {
+            res.status(400).send({
+                errorMessage: "내용에 부적절한 단어가 포함되어 있습니다.",
+            });
             return;
         }
         await boards.create({ comment });
@@ -31,6 +40,24 @@ async function getSelectedBoards(req, res) {
         console.log(err);
         res.status(400).send(err);
     }
+}
+
+// 금지어 포함여부 확인
+function forbiddenWordTest(str) {
+    const input = fs.readFileSync(process.env.FW_TXT).toString().split("\n");
+
+    let result = false;
+    var reg = /[\{\}\[\]\/?.,;:\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+
+    const tempStr = str.replace(reg, "");
+
+    for (let i = 0; i < input.length; i++) {
+        if (tempStr.includes(input[i])) {
+            result = true;
+            break;
+        }
+    }
+    return result;
 }
 
 module.exports = { createBoard, getSelectedBoards };

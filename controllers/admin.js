@@ -83,12 +83,7 @@ async function createMoneyQuestions(req, res) {
 async function createMenu(req, res) {
     try {
         const menuUrl = req.file.location;
-        const {
-            menuName,
-            menuType,
-            menuStyle,
-            menuWith,
-        } = req.body;
+        const { menuName, menuType, menuStyle, menuWith } = req.body;
         await menus.create({
             menuName,
             menuUrl,
