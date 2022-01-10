@@ -11,7 +11,8 @@ const giftsUserData = new mongoose.Schema(
             default: 0,
         },
         selectedGift: {
-            type: String,
+            type: Array,
+            default: [],
         },
         giftTarget: { 
             type: String,

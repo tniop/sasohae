@@ -78,6 +78,14 @@ async function addGiftResult(req, res) {
             surveyGifts.push(tempGiftList[Object.keys(tempGiftList)[1]]);
             surveyGifts.push(tempGiftList[Object.keys(tempGiftList)[2]]);
 
+            // 하찮은 선물 카테고리의 추천된 선물 카운트 증가
+            const { giftRecommendCnt } = await gifts.updateMany(
+                {
+                    giftName: { $in: [surveyGifts[0].giftName, surveyGifts[1].giftName, surveyGifts[2].giftName] },
+                },
+                { $set: { giftRecommendCnt: giftRecommendCnt + 1 } }
+            );
+
             // selectedGift_id 찾아서 보냄
             const getSelectedGift_id = await giftUserData.find({
                 $and: [{
@@ -126,6 +134,14 @@ async function addGiftResult(req, res) {
             surveyGifts.push(tempGiftList[Object.keys(tempGiftList)[1]]);
             surveyGifts.push(tempGiftList[Object.keys(tempGiftList)[2]]);
 
+            // 추천된 선물 카운트 증가
+            const { giftRecommendCnt }  = await gifts.updateMany(
+                {
+                    giftName: { $in: [surveyGifts[0].giftName, surveyGifts[1].giftName, surveyGifts[2].giftName] },
+                },
+                { $set: { giftRecommendCnt: giftRecommendCnt + 1  } }
+            );
+
             // selectedGift_id 찾아서 보냄
             const getSelectedGift_id = await giftUserData.find({              
                 $and: [{
@@ -166,7 +182,7 @@ async function reviseGiftFeedback(req, res) {
 
         await giftUserData.updateOne(
             { selectedGift_id },
-            { $set: { selectedGift: selectedGift } }
+            { $push: { selectedGift: selectedGift } } 
         );
 
         // gifts 테이블에 Like 반영
@@ -189,7 +205,7 @@ async function reviseGiftFeedback(req, res) {
     }
 }
 
-// 선물추천 giftRecommendCnt 반영 
+// 선물추천 giftRecommendCnt 반영  -> 이 부분 주석 처리? (RecommendCnt addGiftResult 에서 처리)
 async function giftRecommend(req, res) {
     try {
         const { selectedGift } = req.body;
