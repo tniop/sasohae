@@ -14,17 +14,30 @@ async function createGiftRanking() {
         .sort({ giftLikeCnt: -1 });
 
     const tempRankingArr = [];
+    let rank = 1;
 
     const rankingDB = await rankings.findOne({ ranking_Id: 1 });
 
     if (!rankingDB) {
         for (let i = 0; i < top10Ranked.length; i++) {
             tempRankingArr[i] = {};
-            const rank = i + 1;
+            // ranking을 위한 로직;
+            tempRankingArr[i].rank = rank;
+            if (i > 0) {
+                let tempValue = top10Ranked[i - 1].giftLikeCnt;
+                if (tempValue == top10Ranked[i].giftLikeCnt) {
+                    tempRankingArr[i].rank = tempRankingArr[i - 1].rank;
+                    rank++;
+                } else {
+                    rank++;
+                    tempRankingArr[i].rank = rank;
+                }
+            }
+            // title, imgUrl, likeCnt 를 위한 로직;
             const title = top10Ranked[i].giftName;
             const imgUrl = top10Ranked[i].giftUrl;
             const likeCnt = top10Ranked[i].giftLikeCnt;
-            tempRankingArr[i].rank = rank;
+
             tempRankingArr[i].title = title;
             tempRankingArr[i].imgUrl = imgUrl;
             tempRankingArr[i].likeCnt = likeCnt;
@@ -40,11 +53,23 @@ async function createGiftRanking() {
 
         for (let i = 0; i < top10Ranked.length; i++) {
             tempRankingArr[i] = {};
-            const rank = i + 1;
+            // ranking을 위한 로직;
+            tempRankingArr[i].rank = rank;
+            if (i > 0) {
+                let tempValue = top10Ranked[i - 1].giftLikeCnt;
+                if (tempValue == top10Ranked[i].giftLikeCnt) {
+                    tempRankingArr[i].rank = tempRankingArr[i - 1].rank;
+                    rank++;
+                } else {
+                    rank++;
+                    tempRankingArr[i].rank = rank;
+                }
+            }
+            // title, imgUrl, likeCnt 를 위한 로직;
             const title = top10Ranked[i].giftName;
             const imgUrl = top10Ranked[i].giftUrl;
             const likeCnt = top10Ranked[i].giftLikeCnt;
-            tempRankingArr[i].rank = rank;
+
             tempRankingArr[i].title = title;
             tempRankingArr[i].imgUrl = imgUrl;
             tempRankingArr[i].likeCnt = likeCnt;
@@ -68,17 +93,31 @@ async function createMenuRanking() {
         .sort({ menuLikeCnt: -1 });
 
     const tempRankingArr = [];
+    let rank = 1;
 
     const rankingDB = await rankings.findOne({ ranking_Id: 2 });
 
     if (!rankingDB) {
         for (let i = 0; i < top10Ranked.length; i++) {
             tempRankingArr[i] = {};
-            const rank = i + 1;
+            // ranking을 위한 로직;
+            tempRankingArr[i].rank = rank;
+            if (i > 0) {
+                let tempValue = top10Ranked[i - 1].menuLikeCnt;
+                if (tempValue == top10Ranked[i].menuLikeCnt) {
+                    tempRankingArr[i].rank = tempRankingArr[i - 1].rank;
+                    rank++;
+                } else {
+                    rank++;
+                    tempRankingArr[i].rank = rank;
+                }
+            }
+
+            // title, imgUrl, likeCnt 를 위한 로직;
             const title = top10Ranked[i].menuName;
             const imgUrl = top10Ranked[i].menuUrl;
             const likeCnt = top10Ranked[i].menuLikeCnt;
-            tempRankingArr[i].rank = rank;
+
             tempRankingArr[i].title = title;
             tempRankingArr[i].imgUrl = imgUrl;
             tempRankingArr[i].likeCnt = likeCnt;
@@ -94,11 +133,24 @@ async function createMenuRanking() {
 
         for (let i = 0; i < top10Ranked.length; i++) {
             tempRankingArr[i] = {};
-            const rank = i + 1;
+            // ranking을 위한 로직;
+            tempRankingArr[i].rank = rank;
+            if (i > 0) {
+                let tempValue = top10Ranked[i - 1].menuLikeCnt;
+                if (tempValue == top10Ranked[i].menuLikeCnt) {
+                    tempRankingArr[i].rank = tempRankingArr[i - 1].rank;
+                    rank++;
+                } else {
+                    rank++;
+                    tempRankingArr[i].rank = rank;
+                }
+            }
+
+            // title, imgUrl, likeCnt 를 위한 로직;
             const title = top10Ranked[i].menuName;
             const imgUrl = top10Ranked[i].menuUrl;
             const likeCnt = top10Ranked[i].menuLikeCnt;
-            tempRankingArr[i].rank = rank;
+
             tempRankingArr[i].title = title;
             tempRankingArr[i].imgUrl = imgUrl;
             tempRankingArr[i].likeCnt = likeCnt;
