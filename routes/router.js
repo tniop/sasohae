@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-/* ==================== controllers ====================*/
+/* ==================== controllers ==================== */
 const {
     getGiftQuestion,
     addGiftResult,
@@ -27,9 +27,9 @@ const {
     getTopRankedMenus,
 } = require("../controllers/ranking");
 const createAccessTime = require("../controllers/userAccessTime");
-/* ==================================================*/
+/* ================================================== */
 
-/* ==================== middleware ====================*/
+/* ==================== middleware ==================== */
 const upload = require("../middleware/upload");
 const {
     userVisit,
@@ -40,9 +40,9 @@ const {
     userVisitBoard,
     writeBoard,
 } = require("../middleware/statistic");
-/* ==================================================*/
+/* ================================================== */
 
-/* ==================== router ====================*/
+/* ==================== router ==================== */
 router.put("/main", userVisit, createAccessTime);
 router.put("/money", useMoney);
 // router.put("/comments", userVisitBoard);
@@ -72,6 +72,6 @@ router.post("/admin/gifts", upload.single("img"), createGift);
 router.post("/admin/gifts/questions", createGiftQuestions);
 router.post("/admin/money", createMoneyQuestions);
 router.post("/admin/menu", upload.single("img"), createMenu);
-/* ==================================================*/
+/* ================================================== */
 
 module.exports = router;
