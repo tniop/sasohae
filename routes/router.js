@@ -58,8 +58,8 @@ router.get("/gifts/options", getTopRankedGifts);
 router.get("/money", getMoneyQuestion);
 router.post("/money", moneyQuestionAnswer);
 
-router.post("/menu", getMenu);
-router.put("/menu", useMenu, likeMenu);
+router.post("/menu", useMenu, getMenu);
+router.put("/menu", likeMenu);
 router.put("/menu/recommend", recommendMenu);
 router.get("/menu/ranking", getTopRankedMenus);
 
