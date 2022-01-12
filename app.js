@@ -14,7 +14,13 @@ require("dotenv").config();
 
 app.use(express.static("public"));
 
-app.use("*", cors());
+const corsOptions = {
+    origin: [process.env.DEPLOY_URL_01, process.env.DEPLOY_URL_02],
+    credentials: true,
+    optionSuccessStatus: 200,
+};
+app.use(cors(corsOptions)); // 옵션을 추가한 CORS 미들웨어 추가
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use("/api", router);
