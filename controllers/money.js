@@ -7,22 +7,20 @@ async function getMoneyQuestion(req, res) {
         });
         res.status(200).send(curruntMoneyQuestion);
     } catch (err) {
-        console.log("Error : " + err);
+        console.log(err);
+        res.status(400).send(err);
     }
 }
 
 async function moneyQuestionAnswer(req, res) {
     try {
         const { moneyQuestion_id, answer } = req.body;
-        console.log("money id : " + moneyQuestion_id);
-        console.log("answer : " + answer);
 
         const { positiveAnswerQuestion, negativeAnswerQuestion } =
             await moneyQuestions.findOne({
                 moneyQuestion_id: Number(moneyQuestion_id),
             });
 
-        console.log(positiveAnswerQuestion + ":" + negativeAnswerQuestion);
         if (answer === "O") {
             const nextPositiveAnswerQuestion = await moneyQuestions.findOne({
                 moneyQuestion_id: Number(positiveAnswerQuestion),
@@ -35,7 +33,8 @@ async function moneyQuestionAnswer(req, res) {
             res.status(200).send(nextNegativeAnswerQuestion);
         }
     } catch (err) {
-        console.log("Error : " + err);
+        console.log(err);
+        res.status(400).send(err);
     }
 }
 
