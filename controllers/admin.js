@@ -3,7 +3,6 @@ const giftQuestions = require("../models/giftQuestions");
 const MoneyQuestions = require("../models/moneyQuestions");
 const menus = require("../models/menus");
 
-// 개별 선물 db 등재용 함수
 async function createGift(req, res) {
     try {
         const giftUrl = req.file.location;
@@ -41,7 +40,6 @@ async function createGift(req, res) {
     }
 }
 
-// 선물 질문을 위한 db 등재용 함수
 async function createGiftQuestions(req, res) {
     try {
         const { giftQuestion, giftQuestionType } = req.body;
@@ -52,10 +50,10 @@ async function createGiftQuestions(req, res) {
         res.status(201).send();
     } catch (err) {
         console.log(err);
+        res.status(400).send(err);
     }
 }
 
-// 축의금 질문을 위한 db 등재용 함수
 async function createMoneyQuestions(req, res) {
     try {
         const {
@@ -79,7 +77,6 @@ async function createMoneyQuestions(req, res) {
     }
 }
 
-// admin : 메뉴 db 등재용 함수
 async function createMenu(req, res) {
     try {
         const menuUrl = req.file.location;

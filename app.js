@@ -19,7 +19,7 @@ const corsOptions = {
     credentials: true,
     optionSuccessStatus: 200,
 };
-app.use(cors(corsOptions)); // 옵션을 추가한 CORS 미들웨어 추가
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -35,10 +35,9 @@ app.use((error, req, res, next) => {
 });
 
 const options = {
-    // letsencrypt로 받은 인증서 경로를 입력
     ca: fs.readFileSync(process.env.HTTPS_CA),
     key: fs.readFileSync(process.env.HTTPS_KEY),
     cert: fs.readFileSync(process.env.HTTPS_CERT),
 };
-http.createServer(app).listen(3000);
+http.createServer(app).listen(port);
 https.createServer(options, app).listen(443);

@@ -45,7 +45,6 @@ const {
 /* ==================== router ==================== */
 router.put("/main", userVisit, createAccessTime);
 router.put("/money", useMoney);
-// router.put("/comments", userVisitBoard);
 
 router.get("/gifts", useGift, getGiftQuestion);
 router.post("/gifts", addGiftResult);
@@ -65,8 +64,6 @@ router.get("/menu/ranking", getTopRankedMenus);
 
 router.post("/comments", writeBoard, createBoard);
 router.get("/comments", userVisitBoard, getSelectedBoards);
-
-// router.post("/admin/image", upload.single("img"), imgUpload);
 
 router.post("/admin/gifts", upload.single("img"), createGift);
 router.post("/admin/gifts/questions", createGiftQuestions);

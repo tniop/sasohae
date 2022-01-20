@@ -6,8 +6,8 @@ const giftsUserData = new mongoose.Schema(
     {
         selectedGift_id: {
             type: Number,
-            required: true,
             unique: true,
+            required: true,
             default: 0,
         },
         selectedGift: {
@@ -16,29 +16,37 @@ const giftsUserData = new mongoose.Schema(
         },
         giftTarget: {
             type: String,
+            required: true,
         },
         giftEvent: {
             type: String,
+            required: true,
         },
         sex: {
             type: String,
+            required: true,
         },
         age: {
             type: String,
+            required: true,
         },
         giftAnswerExpensive: {
             type: String,
+            required: true,
         },
         giftAnswerPersonality: {
             type: Array,
+            required: true,
             default: [],
         },
         giftAnswerEmotional: {
             type: Array,
+            required: true,
             default: [],
         },
         giftAnswerTrendy: {
             type: Array,
+            required: true,
             default: [],
         },
     },
