@@ -2,7 +2,6 @@ const boards = require("../models/boards");
 const fs = require("fs");
 require("dotenv").config();
 
-// 고민 끄나풀 작성을 위한 함수
 async function createBoard(req, res) {
     try {
         const { comment } = req.body;
@@ -25,7 +24,7 @@ async function createBoard(req, res) {
     }
 }
 
-// 무한 스크롤 사용을 위한 함수 > 요청에 대하여 10개씩 db로부터 잘라 보낸다.
+// 무한 스크롤 : 요청에 대하여 20개씩 db로부터 잘라 보낸다.
 async function getSelectedBoards(req, res) {
     try {
         const board_id = req.query.commentIdx;
@@ -42,12 +41,11 @@ async function getSelectedBoards(req, res) {
     }
 }
 
-// 금지어 포함여부 확인
 function forbiddenWordTest(str) {
     const input = fs.readFileSync(process.env.FW_TXT).toString().split("\n");
 
     let result = false;
-    var reg = /[\{\}\[\]\/?.,;:\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi;
+    var reg = /[\{\}\[\]\/?.,;:\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi; // 특수문자 제거
 
     const tempStr = str.replace(reg, "");
 
