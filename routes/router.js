@@ -21,7 +21,6 @@ const {
     createGift,
     createGiftQuestions,
 } = require("../controllers/admin");
-const imgUpload = require("../controllers/imgUpload");
 const {
     getTopRankedGifts,
     getTopRankedMenus,
