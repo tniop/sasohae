@@ -123,21 +123,4 @@ async function likeMenu(req, res) {
     }
 }
 
-async function recommendMenu(req, res) {
-    try {
-        const { menuName } = req.body;
-        const { menuRecommendCnt } = await menus.findOne({
-            menuName: menuName,
-        });
-        await menus.updateOne(
-            { menuName: menuName },
-            { $set: { menuRecommendCnt: menuRecommendCnt + 1 } }
-        );
-        res.status(200).send();
-    } catch (err) {
-        console.log(err);
-        res.status(400).send(err);
-    }
-}
-
-module.exports = { getMenu, likeMenu, recommendMenu };
+module.exports = { getMenu, likeMenu };

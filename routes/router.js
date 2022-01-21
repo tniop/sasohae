@@ -12,7 +12,7 @@ const {
     getMoneyQuestion,
     moneyQuestionAnswer,
 } = require("../controllers/money");
-const { getMenu, likeMenu, recommendMenu } = require("../controllers/menus");
+const { getMenu, likeMenu } = require("../controllers/menus");
 const { createBoard, getSelectedBoards } = require("../controllers/boards");
 const {
     createMoneyQuestions,
@@ -56,7 +56,6 @@ router.post("/money", moneyQuestionAnswer);
 
 router.post("/menu", useMenu, getMenu);
 router.put("/menu", likeMenu);
-router.put("/menu/recommend", recommendMenu);
 router.get("/menu/ranking", getTopRankedMenus);
 
 router.post("/comments", writeBoard, createBoard);
