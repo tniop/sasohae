@@ -1,5 +1,5 @@
 const boards = require("../models/boards");
-const fs = require("fs");
+const { forbiddenWordTest } = require("../functions/boardFiltering");
 require("dotenv").config();
 
 async function createBoard(req, res) {
@@ -39,23 +39,6 @@ async function getSelectedBoards(req, res) {
         console.log(err);
         res.status(400).send(err);
     }
-}
-
-function forbiddenWordTest(str) {
-    const input = fs.readFileSync(process.env.FW_TXT).toString().split("\n");
-
-    let result = false;
-    var reg = /[\{\}\[\]\/?.,;:\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]/gi; // 특수문자 제거
-
-    const tempStr = str.replace(reg, "");
-
-    for (let i = 0; i < input.length; i++) {
-        if (tempStr.includes(input[i])) {
-            result = true;
-            break;
-        }
-    }
-    return result;
 }
 
 module.exports = { createBoard, getSelectedBoards };
