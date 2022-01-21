@@ -6,14 +6,13 @@ const {
     getGiftQuestion,
     addGiftResult,
     reviseGiftFeedback,
-    giftRecommend,
     getRandomGift,
 } = require("../controllers/gifts");
 const {
     getMoneyQuestion,
     moneyQuestionAnswer,
 } = require("../controllers/money");
-const { getMenu, likeMenu, recommendMenu } = require("../controllers/menus");
+const { getMenu, likeMenu } = require("../controllers/menus");
 const { createBoard, getSelectedBoards } = require("../controllers/boards");
 const {
     createMoneyQuestions,
@@ -48,7 +47,6 @@ router.put("/money", useMoney);
 router.get("/gifts", useGift, getGiftQuestion);
 router.post("/gifts", addGiftResult);
 router.put("/gifts/like", reviseGiftFeedback);
-router.put("/gifts/recommend", giftRecommend);
 router.get("/gifts/random", useRandomGift, getRandomGift);
 router.get("/gifts/ranking", getTopRankedGifts);
 router.get("/gifts/options", getTopRankedGifts);
@@ -58,7 +56,6 @@ router.post("/money", moneyQuestionAnswer);
 
 router.post("/menu", useMenu, getMenu);
 router.put("/menu", likeMenu);
-router.put("/menu/recommend", recommendMenu);
 router.get("/menu/ranking", getTopRankedMenus);
 
 router.post("/comments", writeBoard, createBoard);
