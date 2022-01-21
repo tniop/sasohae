@@ -11,7 +11,7 @@ async function createGiftRanking() {
     const top10Ranked = await gifts
         .find({})
         .limit(10)
-        .sort({ giftLikeCnt: -1 });
+        .sort({ giftRecommendCnt: -1 });
 
     const tempRankingArr = [];
     let rank = 1;
@@ -24,8 +24,8 @@ async function createGiftRanking() {
             // ranking을 위한 로직;
             tempRankingArr[i].rank = rank;
             if (i > 0) {
-                let tempValue = top10Ranked[i - 1].giftLikeCnt;
-                if (tempValue == top10Ranked[i].giftLikeCnt) {
+                let tempValue = top10Ranked[i - 1].giftRecommendCnt;
+                if (tempValue == top10Ranked[i].giftRecommendCnt) {
                     tempRankingArr[i].rank = tempRankingArr[i - 1].rank;
                     rank++;
                 } else {
@@ -36,7 +36,7 @@ async function createGiftRanking() {
             // title, imgUrl, likeCnt 를 위한 로직;
             const title = top10Ranked[i].giftName;
             const imgUrl = top10Ranked[i].giftUrl;
-            const likeCnt = top10Ranked[i].giftLikeCnt;
+            const likeCnt = top10Ranked[i].giftRecommendCnt;
 
             tempRankingArr[i].title = title;
             tempRankingArr[i].imgUrl = imgUrl;
@@ -56,8 +56,8 @@ async function createGiftRanking() {
             // ranking을 위한 로직;
             tempRankingArr[i].rank = rank;
             if (i > 0) {
-                let tempValue = top10Ranked[i - 1].giftLikeCnt;
-                if (tempValue == top10Ranked[i].giftLikeCnt) {
+                let tempValue = top10Ranked[i - 1].giftRecommendCnt;
+                if (tempValue == top10Ranked[i].giftRecommendCnt) {
                     tempRankingArr[i].rank = tempRankingArr[i - 1].rank;
                     rank++;
                 } else {
@@ -68,7 +68,7 @@ async function createGiftRanking() {
             // title, imgUrl, likeCnt 를 위한 로직;
             const title = top10Ranked[i].giftName;
             const imgUrl = top10Ranked[i].giftUrl;
-            const likeCnt = top10Ranked[i].giftLikeCnt;
+            const likeCnt = top10Ranked[i].giftRecommendCnt;
 
             tempRankingArr[i].title = title;
             tempRankingArr[i].imgUrl = imgUrl;
@@ -90,7 +90,7 @@ async function createMenuRanking() {
     const top10Ranked = await menus
         .find({})
         .limit(10)
-        .sort({ menuLikeCnt: -1 });
+        .sort({ menuRecommendCnt: -1 });
 
     const tempRankingArr = [];
     let rank = 1;
@@ -103,8 +103,8 @@ async function createMenuRanking() {
             // ranking을 위한 로직;
             tempRankingArr[i].rank = rank;
             if (i > 0) {
-                let tempValue = top10Ranked[i - 1].menuLikeCnt;
-                if (tempValue == top10Ranked[i].menuLikeCnt) {
+                let tempValue = top10Ranked[i - 1].menuRecommendCnt;
+                if (tempValue == top10Ranked[i].menuRecommendCnt) {
                     tempRankingArr[i].rank = tempRankingArr[i - 1].rank;
                     rank++;
                 } else {
@@ -116,7 +116,7 @@ async function createMenuRanking() {
             // title, imgUrl, likeCnt 를 위한 로직;
             const title = top10Ranked[i].menuName;
             const imgUrl = top10Ranked[i].menuUrl;
-            const likeCnt = top10Ranked[i].menuLikeCnt;
+            const likeCnt = top10Ranked[i].menuRecommendCnt;
 
             tempRankingArr[i].title = title;
             tempRankingArr[i].imgUrl = imgUrl;
@@ -136,8 +136,8 @@ async function createMenuRanking() {
             // ranking을 위한 로직;
             tempRankingArr[i].rank = rank;
             if (i > 0) {
-                let tempValue = top10Ranked[i - 1].menuLikeCnt;
-                if (tempValue == top10Ranked[i].menuLikeCnt) {
+                let tempValue = top10Ranked[i - 1].menuRecommendCnt;
+                if (tempValue == top10Ranked[i].menuRecommendCnt) {
                     tempRankingArr[i].rank = tempRankingArr[i - 1].rank;
                     rank++;
                 } else {
@@ -149,7 +149,7 @@ async function createMenuRanking() {
             // title, imgUrl, likeCnt 를 위한 로직;
             const title = top10Ranked[i].menuName;
             const imgUrl = top10Ranked[i].menuUrl;
-            const likeCnt = top10Ranked[i].menuLikeCnt;
+            const likeCnt = top10Ranked[i].menuRecommendCnt;
 
             tempRankingArr[i].title = title;
             tempRankingArr[i].imgUrl = imgUrl;
@@ -172,7 +172,6 @@ async function updateGiftRanking() {
     const rankingDB = await rankings.findOne({ ranking_Id: 1 });
     const currentRankinginDB = rankingDB.currentRanking;
 
-    console.log(currentRankinginDB);
     await rankings.updateOne(
         { ranking_Id: 1 },
         { $set: { pastRanking: currentRankinginDB } }
@@ -189,7 +188,6 @@ async function updateMenuRanking() {
     const rankingDB = await rankings.findOne({ ranking_Id: 2 });
     const currentRankinginDB = rankingDB.currentRanking;
 
-    console.log(currentRankinginDB);
     await rankings.updateOne(
         { ranking_Id: 2 },
         { $set: { pastRanking: currentRankinginDB } }
