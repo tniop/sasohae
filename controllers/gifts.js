@@ -2,7 +2,6 @@ const gifts = require("../models/gifts");
 const giftQuestions = require("../models/giftQuestions");
 const giftUserData = require("../models/giftUserData");
 
-// 선물추천 옵션 받기(설문)
 async function getGiftQuestion(req, res) {
     try {
         const giftQuestionPersonality = await giftQuestions.find(
@@ -26,13 +25,10 @@ async function getGiftQuestion(req, res) {
         });
     } catch (err) {
         console.log(err);
-        res.status(400).send({
-            errorMessage: "요청을 처리하지 못했습니다.",
-        });
+        res.status(400).send(err);
     }
 }
 
-// 선물추천(결과)
 async function addGiftResult(req, res) {
     try {
         const {
@@ -64,8 +60,8 @@ async function addGiftResult(req, res) {
         });
 
         /* gifts 컬렉션에서 답변에 맞는 선물 리스트 담기 */
-        // 하찮은 선물인 경우
         if (giftTarget === "8" || giftEvent === "9") {
+            // 하찮은 선물인 경우
             const tempGiftList = await gifts.find(
                 {
                     giftEvent: { $elemMatch: { $in: ["9"] } },
@@ -84,7 +80,7 @@ async function addGiftResult(req, res) {
             surveyGifts.push(tempGiftList[Object.keys(tempGiftList)[1]]);
             surveyGifts.push(tempGiftList[Object.keys(tempGiftList)[2]]);
 
-            // 하찮은 선물 카테고리의 추천된 선물 카운트 증가
+            // 추천된 선물 카운트 증가
             const tempGift_0 = await gifts.findOne({
                 giftName: surveyGifts[0].giftName,
             });
@@ -139,17 +135,16 @@ async function addGiftResult(req, res) {
                 )
                 .limit(1)
                 .sort({ $natural: -1 });
-
             const selectedGift_id = getSelectedGift_id[0].selectedGift_id;
+            // 같은 답변이 있을 경우 가장 최근 사용자 데이터를 가져옴
 
             res.status(200).send({
                 success: true,
                 selectedGift_id: selectedGift_id,
                 surveyGifts,
             });
-
-            // 하찮은 선물이 아닌 경우
         } else {
+            // 하찮은 선물이 아닌 경우
             const all = "*"; // 전체 항목
 
             const tempGiftList = await gifts.find(
@@ -242,8 +237,8 @@ async function addGiftResult(req, res) {
                 )
                 .limit(1)
                 .sort({ $natural: -1 });
-
             const selectedGift_id = getSelectedGift_id[0].selectedGift_id;
+            // 같은 답변이 있을 경우 가장 최근 사용자 데이터를 가져옴
 
             res.status(200).send({
                 success: true,
@@ -253,13 +248,10 @@ async function addGiftResult(req, res) {
         }
     } catch (err) {
         console.log(err);
-        res.status(400).send({
-            errorMessage: "요청을 처리하지 못했습니다.",
-        });
+        res.status(400).send(err);
     }
 }
 
-// 선물추천 Like 반영
 async function reviseGiftFeedback(req, res) {
     try {
         // giftUserData 테이블에 like한 선물 이름 반영
@@ -272,8 +264,6 @@ async function reviseGiftFeedback(req, res) {
 
         // gifts 테이블에 Like 반영
         const giftName = selectedGift;
-
-        const likeGiftExist = await gifts.findOne({ giftName: giftName }); // 해당 라인 지우고 아래 코드로 실행하면 될듯?
         const { giftLikeCnt } = await gifts.findOne({ giftName: giftName });
 
         await gifts.updateOne(
@@ -284,30 +274,10 @@ async function reviseGiftFeedback(req, res) {
         res.status(200).send({ success: true });
     } catch (err) {
         console.log(err);
-        res.status(400).send({
-            errorMessage: "요청을 처리하지 못했습니다.",
-        });
+        res.status(400).send(err);
     }
 }
 
-// 선물추천 giftRecommendCnt 반영  -> 이 부분 주석 처리? (RecommendCnt addGiftResult 에서 처리)
-async function giftRecommend(req, res) {
-    try {
-        const { selectedGift } = req.body;
-        const { giftRecommendCnt } = await gifts.findOne({
-            giftName: selectedGift,
-        });
-        // await gifts.updateOne(
-        //     { giftName: selectedGift },
-        //     { $set: { giftRecommendCnt: giftRecommendCnt + 1 } }
-        // );
-        res.status(200).send();
-    } catch (err) {
-        console.log("Error : " + err);
-    }
-}
-
-// 선물추천 랜덤
 async function getRandomGift(req, res) {
     try {
         const randomGifts = await gifts.aggregate([
@@ -326,6 +296,7 @@ async function getRandomGift(req, res) {
         res.status(200).send({ success: true, randomGifts });
     } catch (err) {
         console.log(err);
+        res.status(400).send(err);
     }
 }
 
@@ -333,6 +304,5 @@ module.exports = {
     getGiftQuestion,
     addGiftResult,
     reviseGiftFeedback,
-    giftRecommend,
     getRandomGift,
 };

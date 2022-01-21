@@ -6,7 +6,6 @@ const {
     getGiftQuestion,
     addGiftResult,
     reviseGiftFeedback,
-    giftRecommend,
     getRandomGift,
 } = require("../controllers/gifts");
 const {
@@ -48,7 +47,6 @@ router.put("/money", useMoney);
 router.get("/gifts", useGift, getGiftQuestion);
 router.post("/gifts", addGiftResult);
 router.put("/gifts/like", reviseGiftFeedback);
-router.put("/gifts/recommend", giftRecommend);
 router.get("/gifts/random", useRandomGift, getRandomGift);
 router.get("/gifts/ranking", getTopRankedGifts);
 router.get("/gifts/options", getTopRankedGifts);
