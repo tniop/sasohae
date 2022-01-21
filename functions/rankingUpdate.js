@@ -3,8 +3,8 @@ const menus = require("../models/menus");
 const rankings = require("../models/rankings");
 const cron = require("node-cron");
 
-cron.schedule("*/15 * * * *", updateGiftRanking()); // 15분마다 랭킹갱신
-cron.schedule("*/15 * * * *", updateMenuRanking());
+cron.schedule("*/15 * * * *", updateGiftRanking); // 15분마다 랭킹갱신
+cron.schedule("*/15 * * * *", updateMenuRanking);
 
 async function createGiftRanking() {
     const top10Ranked = await gifts
