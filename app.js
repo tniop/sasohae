@@ -7,11 +7,13 @@ const cors = require("cors");
 const port = 3000;
 const swaggerUi = require("swagger-ui-express");
 const swaggerFile = require("./swagger-output");
+const helmet = require("helmet");
 const fs = require("fs");
 const http = require("http");
 const https = require("https");
 require("dotenv").config();
 
+app.use(helmet());
 app.use(express.static("public"));
 
 const corsOptions = {
