@@ -13,7 +13,7 @@ const http = require("http");
 const https = require("https");
 require("dotenv").config();
 
-app.use(helmet()); // test
+app.use(helmet());
 app.use(express.static("public"));
 
 const corsOptions = {
