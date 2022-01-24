@@ -7,7 +7,8 @@ async function getMenu(req, res) {
         const { menuType, menuStyle, menuWith } = req.body;
         let tempMenuList = [];
 
-        if (menuStyle === all) { // 종류가 전체인 경우
+        if (menuStyle === all) {
+            // 종류가 전체인 경우
             const menuList = await menus.find(
                 {
                     menuType: { $elemMatch: { $in: [all, menuType] } },
@@ -52,7 +53,8 @@ async function getMenu(req, res) {
             );
 
             res.status(200).send(tempMenuList);
-        } else { // 종류 전체가 아닐 경우
+        } else {
+            // 종류 전체가 아닐 경우
             const menuList = await menus.find(
                 {
                     menuType: { $elemMatch: { $in: [all, menuType] } },
@@ -109,13 +111,13 @@ async function likeMenu(req, res) {
     try {
         const { menuName } = req.body;
         const likeMenu = await menus.findOne({ menuName: menuName });
-        
+
         const menuLikeCnt = likeMenu.menuLikeCnt;
         await menus.updateOne(
             { menuName },
             { $set: { menuLikeCnt: menuLikeCnt + 1 } }
         );
-        
+
         res.status(200).send();
     } catch (err) {
         console.log(err);
