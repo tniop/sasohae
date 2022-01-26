@@ -22,11 +22,12 @@
 
 <br><br>
 ## 📚 Back-End 기술스택
-|기술스택|설명|
+|이름|설명|
 |:---:|:---:|
+|AWS EC2|Server|
 |Node.js|Javascript Runtime|
 |Express|Web Framework|
-|MongoDB|Database|
+|Atlas (MongoDB)|Database|
 |Jenkins|CI/CD|
 
 <br><br>
