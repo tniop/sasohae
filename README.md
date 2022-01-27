@@ -7,7 +7,7 @@
 
 <br><br>
 ## 📚 WIKI
-- https://github.com/TnIoP/sasohae-admin/wiki
+- https://github.com/TnIoP/sasohae/wiki
 
 <br><br>
 ## 🚀 서비스 소개
