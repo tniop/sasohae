@@ -6,6 +6,10 @@
 - https://sasohae.com/
 
 <br><br>
+## 📚 WIKI
+- https://github.com/TnIoP/sasohae-admin/wiki
+
+<br><br>
 ## 🚀 서비스 소개
 취업, 연애, 사회생활 등 진지하고 무거운 고민으로 고통 받는 사회 초년생을 위해 사소한 고민은 해결해드려요!
 
